@@ -86,7 +86,7 @@ dict_response = {}
 if fasta_check:
 	dict_response.update({"fasta_check":"OK"})
 	
-	if fasta_len <=100:
+	if fasta_len <=50:
 		dict_response.update({"fasta_length":"OK"})
 		#auxiliar variables
 		canonical_residues = ["A","R","N","D","C","Q","E","G","H","I","L","K","M","F","P","S","T","W","Y","V"]

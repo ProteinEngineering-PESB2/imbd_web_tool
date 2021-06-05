@@ -20,7 +20,7 @@ def mapping_string(string_value, sequence):
 		dict_value = {"positions": response, "coincidences":number_data}
 		return dict_value
 	else:
-		return -1
+		return "ERR"
 
 #params
 string_map = sys.argv[1]#string to search	
@@ -29,13 +29,13 @@ fasta_seq = sys.argv[2]#fasta file sequence
 fasta_check, fasta_len= (is_fasta(fasta_seq))
 dict_responses = {}
 
-if len(string_map)>=3 and len(string_map)<=100:
+if len(string_map)>=5 and len(string_map)<=30:
 	dict_responses.update({"length_string_map":"OK"})
 
 	if fasta_check:
 		dict_responses.update({"fasta_status":"OK"})
 
-		if fasta_len <=100:
+		if fasta_len <=50:
 			dict_responses.update({"length_status":"OK"})
 			dict_response_array = []
 			for record in SeqIO.parse(fasta_seq, "fasta"):				

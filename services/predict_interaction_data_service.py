@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 from Bio.PDB.PDBParser import PDBParser
 import sys
+import urllib.request      
 
 #get results from whatif using pdb input got
 def scrapping(pdb_file, input_folder):
@@ -47,7 +48,7 @@ def scrapping(pdb_file, input_folder):
 def check_number_chains(input_folder, pdb_file):
 
     parser = PDBParser()#creamos un parse de pdb
-    pdb_code = pdb_file.split("/")[-1].split(".")[0]
+    pdb_code = pdb_file.split(".")[0]
     structure = parser.get_structure(pdb_code, input_folder+pdb_file)
 
     chains = 0
@@ -194,6 +195,21 @@ def get_edges_from_line(line_hbond_file):
 
     return response
 
+#get positions from pdb using identified residues on interactions process
+def get_positions_from_pdb(chain, id_data, pdb_code, input_folder):
+
+    parser = PDBParser()#creamos un parse de pdb
+    
+    try:
+        structure = parser.get_structure(pdb_code, "{}/{}.pdb".format(input_folder, pdb_code))
+    except:
+        structure = parser.get_structure(pdb_code.upper(), "{}}/{}.pdb".format(input_folder, pdb_code.upper()))
+    
+    atom_data = structure[0][chain][id_data]["CA"]
+    coordenates = atom_data.get_coord()
+    coordenates_str = "{}:{}:{}".format(coordenates[0], coordenates[1], coordenates[2])
+
+    return coordenates_str
 
 #process result whatif
 def process_result_whatif(input_folder, pdb_file):
@@ -213,39 +229,104 @@ def process_result_whatif(input_folder, pdb_file):
         if "Flipped" in line:
             break
         else:
-            response = get_edges_from_line(line)            
-            if len(response) == 3:
-                if response[0][0] != response[1][0]:
+            response_interactions = get_edges_from_line(line)            
+            if len(response_interactions) == 3:
 
-                    interaction = {"chain_1":response[0].split("-")[0], "residue_1":response[0].split("-")[1], "pos_1":response[0].split("-")[2], "chain_2":response[1].split("-")[0], "residue_2":response[1].split("-")[1], "pos_2":response[1].split("-")[2], "value_interaction":response[2]}
-                    array_interactions.append(interaction)                    
+                node1 = response_interactions[0]    
+                node2 = response_interactions[1]
+                value_data = response_interactions[2]
+
+                if node1[0] != node2[0]:#must be different chains
+
+                    try:
+                        node1_values = node1.split("-")
+                        pdb_code = pdb_file.split(".")[0]
+                        coordenates_str_node1= get_positions_from_pdb(node1_values[0], int(node1_values[2]), pdb_code, input_folder)
+                        
+                        node2_values = node2.split("-")
+                        coordenates_str_node2= get_positions_from_pdb(node2_values[0], int(node2_values[2]), pdb_code, input_folder)
+
+                        node1 = {"chain":node1_values[0], "residue": node1_values[1], "pos" : node1_values[2]}
+                        pos_node1 = {"x": coordenates_str_node1.split(":")[0], "y":coordenates_str_node1.split(":")[1], "z": coordenates_str_node1.split(":")[2]}
+
+                        node2 = {"chain":node2_values[0], "residue": node2_values[1], "pos" : node2_values[2]}
+                        pos_node2 = {"x": coordenates_str_node2.split(":")[0], "y":coordenates_str_node2.split(":")[1], "z": coordenates_str_node2.split(":")[2]}
+
+                        interaction_data = {"member1":{"info_residue":node1, "info_pos": pos_node1}, "member2":{"info_residue":node2, "info_pos": pos_node2}, "value_interaction": value_data}
+
+                        array_interactions.append(interaction_data) 
+                    except:
+                        pass
+  
         line = file_open.readline()
     file_open.close()
 
     return array_interactions
 
+#download pdb files from url
+def dowload_pdb_code(pdb_code, input_folder):
+
+    response = 0
+    try:
+        url_data = "http://files.rcsb.org/download/{}.pdb".format(pdb_code)
+        pdb_file = "{}/{}.pdb".format(input_folder, pdb_code)
+        urllib.request.urlretrieve(url_data, pdb_file)
+    except:
+        response = -1
+        pass
+
+    return response
+
+def run_process_service(input_folder, pdb_data):
+
+    dict_response = {}
+
+    if check_number_chains(input_folder, pdb_data):
+        dict_response.update({"number_chains": "OK"})
+
+        #process scraping
+        scrapping(pdb_data, input_folder)
+
+        if check_whatif_result(input_folder):
+            dict_response.update({"status_whatif": "OK"})
+            array_interactions = process_result_whatif(input_folder, pdb_data)
+
+            dict_response.update({"detected_interactions":array_interactions})
+            
+        else:
+            dict_response.update({"status_whatif": "ERR"})
+    else:
+        dict_response.update({"number_chains": "ERR"})
+
+    return dict_response
+
 #arguments
 input_folder = sys.argv[1]
-pdb_input = sys.argv[2]
+pdb_option = int(sys.argv[2])#1: is a file, 2: is a PDB code
+pdb_input = sys.argv[3]
 
 dict_response = {}
 
-#check number of chains
-if check_number_chains(input_folder, pdb_input):
-    dict_response.update({"number_chains": "OK"})
+#check download or process from file
+if pdb_option == 2:
+    print("Download process")
+    response_download = dowload_pdb_code(pdb_input, input_folder)
 
-    #process scraping
-    #scrapping(pdb_input, input_folder)
+    if response_download == -1:
+        dict_response.update({"status_download":"ERR"})
 
-    if check_whatif_result(input_folder):
-        dict_response.update({"status_whatif": "OK"})
-        array_interactions = process_result_whatif(input_folder, pdb_input)
-
-        dict_response.update({"detected_interactions":array_interactions})
-        
     else:
-        dict_response.update({"status_whatif": "ERR"})
+        print("Process interactions")
+        response_interactions = run_process_service(input_folder, pdb_input+".pdb")
+        dict_response.update({"response_service":response_interactions})
+
 else:
-    dict_response.update({"number_chains": "ERR"})
+    response_interactions = run_process_service(input_folder, pdb_input)
+    dict_response.update({"response_service":response_interactions})
 
 print(json.dumps(dict_response))
+
+#delete tmp file on input data
+command = "rm -rf {}*".format(input_folder)
+print(command)
+#os.system(command)

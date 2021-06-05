@@ -1,4 +1,4 @@
-Date= 2021-05-28 06:18:26
+Date= 2021-06-05 16:49:44
 
 
     1 ILE (  16 )A       N   ->   182 ASP ( 194 )A       OD2 Sym=   1 Val=  0.574  DA=  2.55  DHA= 61.00
@@ -402,10 +402,12 @@ Date= 2021-05-28 06:18:26
   433 GLY ( 221 )B       N   ->   405 ASP ( 189 )B       OD2 Sym=   1 Val=  0.789  DA=  3.11  DHA= 21.66
   435 ARG ( 223 )B       NH1 ->   548 ASP (  92 )D       O   Sym=   1 Val=  0.657  DA=  2.79  DHA= 24.24
   435 ARG ( 223 )B       NH2 ->   548 ASP (  92 )D       OD2 Sym=   1 Val=  0.391  DA=  2.83  DHA= 30.48
-  436 LYS ( 223A)B       NZ  ->   486 ASP (  30 )D       OD2 Sym=   1 Val=  0.610  DA=  2.65  DHA= 28.65
-  436 LYS ( 223A)B       NZ  ->   488 ASP (  32 )D       OD2 Sym=   1 Val=  0.626  DA=  2.64  DHA= 27.01
-  436 LYS ( 223A)B       NZ  ->   485 ILE (  29 )D       O   Sym=   1 Val=  0.253  DA=  3.00  DHA= 72.24
-  436 LYS ( 223A)B       NZ  ->   548 ASP (  92 )D       OD1 Sym=   1 Val=  0.569  DA=  2.69  DHA= 43.07
+  436 LYS ( 223A)B       NZ  ->   486 ASP (  30 )D       OD2 Sym=   1 Val=  0.517  DA=  2.65  DHA= 75.28
+  436 LYS ( 223A)B       NZ  ->   488 ASP (  32 )D       OD2 Sym=   1 Val=  0.314  DA=  2.64  DHA= 82.92
+  436 LYS ( 223A)B       NZ  ->   488 ASP (  32 )D       OD2 Sym=   1 Val=  0.521  DA=  2.64  DHA= 75.38
+  436 LYS ( 223A)B       NZ  ->   485 ILE (  29 )D       O   Sym=   1 Val=  0.227  DA=  3.00  DHA= 71.64
+  436 LYS ( 223A)B       NZ  ->   548 ASP (  92 )D       OD1 Sym=   1 Val=  0.367  DA=  2.69  DHA= 75.80
+  436 LYS ( 223A)B       NZ  ->   486 ASP (  30 )D       OD2 Sym=   1 Val=  0.351  DA=  2.65  DHA= 84.02
   437 LYS ( 224 )B       N   ->   434 ASN ( 222 )B       O   Sym=   1 Val=  0.614  DA=  2.87  DHA= 20.44
   437 LYS ( 224 )B       NZ  ->   387 HIS ( 171 )B       O   Sym=   1 Val=  0.465  DA=  3.33  DHA= 38.49
   437 LYS ( 224 )B       NZ  ->   386 THR ( 170B)B       O   Sym=   1 Val=  0.351  DA=  3.42  DHA= 43.97
@@ -1197,17 +1199,20 @@ Date= 2021-05-28 06:18:26
  1313 GOL ( 301 )A       O2  ->   117 VAL ( 130 )A       O   Sym=   1 Val=  0.766  DA=  2.58  DHA=  5.65
  1313 GOL ( 301 )A       O3  ->   149 LEU ( 163 )A       O   Sym=   1 Val=  0.454  DA=  2.52  DHA= 17.66
  1313 GOL ( 301 )A       O3  ->   170 CYS ( 182 )A       O   Sym=   1 Val=  0.119  DA=  3.12  DHA= 78.84
- 1314 GOL ( 302 )A       O2  ->  1128 ASP (  31 )L       OD1 Sym=   1 Val=  0.134  DA=  2.95  DHA= 55.48
+ 1314 GOL ( 302 )A       O2  ->  1128 ASP (  31 )L       OD1 Sym=   1 Val=  0.032  DA=  2.95  DHA= 75.09
  1318 GOL ( 301 )B       O1  ->   377 LEU ( 163 )B       O   Sym=   1 Val=  0.539  DA=  2.69  DHA= 18.71
  1318 GOL ( 301 )B       O2  ->   345 VAL ( 130 )B       O   Sym=   1 Val=  0.740  DA=  2.50  DHA=  7.24
  1319 GOL ( 302 )B       O2  ->   350 LEU ( 135 )B       O   Sym=   1 Val=  0.687  DA=  2.89  DHA= 19.84
  1320 GOL ( 303 )B       O1  ->   422 GLU ( 210 )B       OE2 Sym=   1 Val=  0.501  DA=  2.95  DHA= 31.58
- 1323 GOL ( 301 )D       O1  ->   487 ASP (  31 )D       OD1 Sym=   1 Val=  0.319  DA=  2.27  DHA= 24.77
- 1323 GOL ( 301 )D       O2  ->   386 THR ( 170B)B       O   Sym=   1 Val=  0.688  DA=  2.70  DHA= 13.93
- 1323 GOL ( 301 )D       O3  ->   385 ARG ( 170A)B       O   Sym=   1 Val=  0.096  DA=  3.05  DHA= 62.36
+ 1323 GOL ( 301 )D       O1  ->   487 ASP (  31 )D       OD1 Sym=   1 Val=  0.228  DA=  2.27  DHA= 34.06
+ 1323 GOL ( 301 )D       O2  ->   386 THR ( 170B)B       O   Sym=   1 Val=  0.288  DA=  2.70  DHA= 66.10
+ 1323 GOL ( 301 )D       O2  ->   488 ASP (  32 )D       OD1 Sym=   1 Val=  0.129  DA=  3.05  DHA= 74.03
+ 1323 GOL ( 301 )D       O3  ->   385 ARG ( 170A)B       O   Sym=   1 Val=  0.112  DA=  3.05  DHA= 69.54
  1324 GOL ( 302 )D       O1  ->   510 LEU (  54 )D       O   Sym=   1 Val=  0.258  DA=  3.74  DHA=  8.29
  1327 GOL ( 301 )E       O3  ->   741 LEU (  72 )E       O   Sym=   1 Val=  0.773  DA=  2.76  DHA=  5.53
+ 1328 GOL ( 302 )E       O1  ->   732 ASP (  63 )E       O   Sym=   1 Val=  0.049  DA=  3.56  DHA= 41.61
  1328 GOL ( 302 )E       O2  ->   732 ASP (  63 )E       O   Sym=   1 Val=  0.779  DA=  2.63  DHA=  4.76
+ 1328 GOL ( 302 )E       O3  ->   715 GLU (  46 )E       OE2 Sym=   1 Val=  0.550  DA=  2.68  DHA= 38.69
  1329 GOL ( 301 )H       O3  ->   988 GLN ( 113 )H       O   Sym=   1 Val=  0.291  DA=  3.17  DHA= 42.14
  1333 HOH ( 401 )A       O   ->   114 ASP ( 128 )A       OD2 Sym=   1 Val=  0.748  DA=  2.71  DHA= 27.34
  1333 HOH ( 402 )A       O   ->   119 PRO ( 132 )A       O   Sym=   1 Val=  0.309  DA=  3.82  DHA=  9.58
@@ -1483,8 +1488,7 @@ Date= 2021-05-28 06:18:26
  1335 HOH ( 479 )D       O   ->   480 ILE (  24 )D       O   Sym=   1 Val=  0.636  DA=  2.73  DHA= 13.02
  1335 HOH ( 481 )D       O   ->   487 ASP (  31 )D       O   Sym=   1 Val=  0.180  DA=  3.30  DHA= 44.13
  1335 HOH ( 481 )D       O   ->   489 MET (  33 )D       O   Sym=   1 Val=  0.737  DA=  2.76  DHA= 16.39
- 1335 HOH ( 482 )D       O   ->   488 ASP (  32 )D       OD2 Sym=   1 Val=  0.275  DA=  3.79  DHA= 13.72
- 1335 HOH ( 482 )D       O   ->   487 ASP (  31 )D       OD1 Sym=   1 Val=  0.513  DA=  2.77  DHA= 33.16
+ 1335 HOH ( 482 )D       O   ->   487 ASP (  31 )D       OD1 Sym=   1 Val=  0.595  DA=  2.77  DHA= 17.54
  1335 HOH ( 483 )D       O   ->   506 GLY (  50 )D       O   Sym=   1 Val=  0.149  DA=  3.31  DHA= 31.26
  1335 HOH ( 483 )D       O   ->   487 ASP (  31 )D       OD2 Sym=   1 Val=  0.333  DA=  3.75  DHA= 15.64
  1335 HOH ( 484 )D       O   ->   611 GLN ( 155 )D       O   Sym=   1 Val=  0.503  DA=  3.21  DHA= 13.49
@@ -1501,7 +1505,6 @@ Date= 2021-05-28 06:18:26
  1335 HOH ( 502 )D       O   ->   526 ASP (  70 )D       OD1 Sym=   1 Val=  0.925  DA=  2.78  DHA=  6.81
  1335 HOH ( 503 )D       O   ->   617 GLU ( 161 )D       O   Sym=   1 Val=  0.474  DA=  3.64  DHA= 20.65
  1335 HOH ( 504 )D       O   ->   552 TYR (  96 )D       O   Sym=   1 Val=  0.580  DA=  2.91  DHA= 16.91
- 1335 HOH ( 505 )D       O   ->   484 ASP (  28 )D       O   Sym=   1 Val=  0.416  DA=  2.61  DHA=  6.11
  1335 HOH ( 505 )D       O   ->   484 ASP (  28 )D       OD2 Sym=   1 Val=  0.640  DA=  2.63  DHA= 27.37
  1335 HOH ( 506 )D       O   ->   657 LEU ( 201 )D       O   Sym=   1 Val=  0.153  DA=  2.72  DHA= 74.32
  1335 HOH ( 506 )D       O   ->   654 HIS ( 198 )D       O   Sym=   1 Val=  0.567  DA=  2.82  DHA= 27.45
@@ -1838,9 +1841,9 @@ Flipped position for residue :  1249 ASN ( 152 )L
 There are  2 hydrogen atoms in the following group:
 --Group member :   866 HIS ( 208 )E       ND1
 --Group member :   866 HIS ( 208 )E       NE2
-Number of H-bonds...................... 1014.903
+Number of H-bonds...................... 1014.684
 Penalty for too many/few H-atoms....... 0.400
 Penalty for flipped residues........... 6.700
 Mislocated H penalty................... 12.000
  
-Total current value.................... 995.804
+Total current value.................... 995.584

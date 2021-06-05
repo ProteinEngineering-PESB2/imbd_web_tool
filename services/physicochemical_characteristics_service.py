@@ -59,7 +59,7 @@ dict_response_data = {}
 if fasta_check:
 	dict_response_data.update({"fasta_check":"OK"})
 
-	if fasta_len<100:
+	if fasta_len<=50:
 		dict_response_data.update({"fasta_length":"OK"})
 		
 		array_responses = []
