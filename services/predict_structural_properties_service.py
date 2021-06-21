@@ -23,7 +23,7 @@ path_export = sys.argv[2]
 
 #create dir with a random id
 random_data = str(random.uniform(0, 1000000)).replace(".", "_")
-path_out = "{}{}/".format(path_out, random_data)
+path_out = "{}{}/".format(path_export, random_data)
 
 command = "mkdir -p {}".format(path_out)
 os.system(command)
@@ -60,22 +60,23 @@ if fasta_check:
 					seq=str(record.seq).replace("?","").replace(".", "").replace("*","").replace("-","").replace("X","")
 					
 					#export sequence to fasta file
-					file_out= open("{}seq_structural.fasta".format(path_export), "w+")
+					file_out= open("{}seq_structural.fasta".format(path_out), "w+")
 					file_out.write(">"+record.id+"\n"+seq+"\n")
 					file_out.close()
 
 					#create command
-					command= "{} -i seq_structural.fasta -o {}".format(sh_file_properties, path_export)
+					command= "{} -i seq_structural.fasta -o {}".format(sh_file_properties, path_out)
 					os.system(command)
 					
 					#process all results
-					files=os.listdir(path_export)
+					files=os.listdir(path_out)
 					first = next(filter(lambda files: ".all" in files, files), None)
 					
 					#lecture file
-					file_now=open(path_export+first, "r")
+					file_now=open(path_out+first, "r")
 					all_lines=file_now.read().split("\n")
-
+					file_now.close()
+					
 					#get properties count
 					dict_all={"counts_ss3":get_properties(ss3_properties, all_lines[2]), "counts_ss8": get_properties(ss8_properties, all_lines[3]), "counts_acc": get_properties(acc_properties, all_lines[4]), "counts_disorder":get_properties(disso_properties, all_lines[5])}
 					
@@ -96,7 +97,7 @@ if fasta_check:
 else:
 	data_response.update({"is_fasta":"OK"})
 
-command = "rm -rf {}".format(path_export)
+command = "rm -rf {}".format(path_out)
 os.system(command)
 
 print(json.dumps(data_response))
