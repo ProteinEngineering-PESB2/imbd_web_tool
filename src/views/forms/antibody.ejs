@@ -1,0 +1,97 @@
+<div id="antibody_form">
+    <!-- Largo -->
+    <div class="mb-4" id="div_largo_antibody">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="grid-state">
+            Lenght
+        </label>
+        <div class="relative">
+            <small>Length range between: <br>
+                <b id="antibody_slider_val1"></b> and <b id="antibody_slider_val2"></b> residues
+            </small>
+            <br>
+            <input class="ex2" id="antibody_slider_input" type="text" class="span2" />
+        </div>
+    </div>
+    <hr>
+    <!-- Pfam y GO -->
+    <div id="form_pfam_go">
+        <div class="mb-4 div_pfam">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Pfam Domain</label>
+            <select
+                class="pfam_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="pfam_input_antibody">
+                <option></option>
+        </select>
+        </div>
+        <div class="mb-4 div_bgo">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Biological Process</label>
+            <select
+                class="bp_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="bp_input_antibody">
+                <option></option>
+            </select>
+        </div>
+        <div class="mb-4 div_mgo">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Molecular Function</label>
+            <select
+                class="mf_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="mf_input_antibody">
+                <option></option>
+            </select>
+        </div>
+        <div class="mb-4 div_cgo">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Celular Component</label>
+            <select
+                class="cc_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="cc_input_antibody">
+                <option></option>
+            </select>
+        </div>
+    </div>
+    <hr>
+    <!-- Chain type -->
+    <div class="mb-4" id="div_cadena">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Chain type</label>
+        <select
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="chain_input"></select>
+    </div>
+    <hr>
+    <!-- Structure -->
+    <div id="structure_form">
+        <div class="mb-4" id="div_estructura">
+            <label class="block">
+                <input class="mr-2 leading-tight checkbox_structure" type="checkbox"
+                        id="checkbox_structure_antibody">
+                <span class="text-sm">Has PDB structure</span>
+            </label>
+        </div>
+        <div class="mb-4 div_pdb" hidden>
+            <label class="block text-gray-700 text-sm font-bold mb-2">PDB ID</label>
+            <select
+                class="pdb_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="pdb_input_antibody">
+                <option></option>
+            </select>
+        </div>
+    </div>    
+    <hr>
+    <!-- Interaction -->
+    <div id="interaction_form">
+        <div class="mb-4 div_interaction">
+            <label class="block">
+                <input class="checkbox_relation mr-2 leading-tight" type="checkbox" id="checkbox_relation_antibody">
+                <span class="text-sm">Has interaction</span>
+            </label>
+        </div>
+        <div class="mb-4 div_relation_id" hidden>
+            <label class="block text-gray-700 text-sm font-bold mb-2">Interaction</label>
+            <select
+                class="interaction_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="interaction_input_antibody">
+                <option></option>
+            </select>
+        </div>
+    </div>
+    <hr>
+</div>

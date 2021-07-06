@@ -1,0 +1,140 @@
+<%- include('partials/head'); -%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<!-- Slider CSS -->
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="/css/loader.css">
+<body>
+  <%- include('partials/nav'); -%>
+  <div class="container flex flex-wrap w-full mx-auto px-2 mt-2">
+    <div class="w-full mb-6 ">
+      <div class="mx-2 h-full p-4 bg-indigo-200 shadow-lg">
+        <h3 class="text-center text-2xl text-blue-800 font-bold ">Alignment service</h3>
+        <div class="font-thin ">
+          <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua.Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magnaaliqua.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-1/2 md:w-1/2 flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+        <div class="p-4 flex-1 flex flex-col text-center">
+          <h3 class="mb-2 text-2xl">Alignment service</h3>
+          <div class="mb-4 text-grey-darker flex-1">
+            <form action="">
+              <div class="mb-4">
+                <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Enter query sequence in fasta format
+                    <textarea id="fasta_query"
+                      class="shadow form-textarea mt-1 block w-full border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      rows="10" placeholder=""></textarea>
+                  </label>
+                </div>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="grid-state">
+                  Align against
+                </label>
+                <div class="relative">
+                  <select id="typeOfDatabase"
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <option value="1">Antibody</option>
+                    <option value="2">Antigen</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div id="filters">
+                <div class="mb-4" id="div_largo">
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="grid-state">
+                    Lenght
+                  </label>
+                  <div class="relative">
+                    <label for="ex2">Filter by sequence lenght interval:</label><br>
+                    <small id="ex2CurrentSliderValLabel">The selected sequence length range is between: <br>
+                      <b id="ex2SliderVal1">
+                        <!-- min -->
+                      </b> and <b id="ex2SliderVal2">
+                        <!-- max -->
+                      </b> residues
+                    </small>
+                    <br>
+                    <input id="ex2" type="text" class="span2" />
+                  </div>
+                </div>
+                <div class="mb-4" id="div_pfam">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Pfam Domain</label>
+                  <select
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="pfam_input">
+                    <option></option>
+                  </select>
+                </div>
+                <div class="mb-4" id="div_bgo">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Biological Process</label>
+                  <select
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="bp_input">
+                    <option></option>
+                  </select>
+                </div>
+                <div class="mb-4" id="div_mgo">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Molecular Function</label>
+                  <select
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="mf_input">
+                    <option></option>
+                  </select>
+                </div>
+                <div class="mb-4" id="div_cgo">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Celular Component</label>
+                  <select
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="cc_input">
+                    <option></option>
+                  </select>
+                </div>
+              </div>
+              <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button" id="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="loader" hidden><div class="spinner"></div></div>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-full md:w-full flex flex-col p-3" id="results">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+        <div class="p-4 flex-1 flex flex-col text-center">
+          <h3 class="mb-2 text-2xl">Results</h3>
+          <div class="mb-4 text-grey-darker flex-1">
+            <table id="table-results">
+              <thead>
+                <th>Id sequence</th>
+                <th>Alignment</th>
+                <th>Distance</th>
+                <th>View</th>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript" charset="utf8" src="/js/alignment.js"></script>

@@ -1,0 +1,45 @@
+<style>
+    .dropdown:hover .dropdown-menu {
+      display: block;
+      z-index: 10;
+    }
+</style>
+<nav class="flex flex-wrap items-center justify-between p-2 bg-blue-200">      
+    <h1 class="ml-3 leading-none text-2xl text-grey-darkest">
+        <a class="no-underline text-grey-darkest hover:text-black" href="#">
+          Immune Molecules Resource
+        </a>
+      </h1>
+    <!-- <img src="http://acmelogos.com/images/logo-1.svg" alt="ACME" width="120" />   -->
+    <div class="flex md:hidden">
+        <button id="hamburger">
+          <img class="toggle block" src="https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png" width="40" height="40" />
+          <img class="toggle hidden" src="https://img.icons8.com/fluent-systems-regular/2x/close-window.png" width="40" height="40" />
+        </button>
+      </div>
+      
+      <div class="toggle hidden md:flex w-full md:w-auto text-bold mt-5 md:mt-0 border-t-2 border-blue-900 md:border-none">        
+        <a href="/" class="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none">Home</a>
+        <div class="dropdown inline-block relative">
+          <button class="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none">
+            <span>Databases</span>
+          </button>
+          <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+            <li><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block" href="/antibody">Antibody</a></li>
+            <li><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block" href="/antigen">Antigen</a></li>
+            <li><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block" href="/epitope">Epitope</a></li>
+          </ul>
+        </div>
+        <a href="/search" class="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none">Search</a>
+        <a href="/tools" class="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none">Tools</a>
+        <a href="/about" class="block md:inline-block text-blue-900 hover:text-blue-500 px-3 py-3 border-b-2 border-blue-900 md:border-none">About us</a>
+    </div>
+</nav> 
+<script>
+document.getElementById("hamburger").onclick = function toggleMenu() {
+    const navToggle = document.getElementsByClassName("toggle");
+    for (let i = 0; i < navToggle.length; i++) {
+        navToggle.item(i).classList.toggle("hidden");
+    }
+};
+</script>

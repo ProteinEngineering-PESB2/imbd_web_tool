@@ -1,0 +1,109 @@
+<%- include('partials/head'); -%>
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="/css/loader.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-more.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+  <body>
+    <%- include('partials/nav'); -%>
+      <div class="container flex flex-wrap w-full mx-auto px-2 mt-2">
+        <div class="w-full mb-6 ">
+          <div class="mx-2 h-full p-4 bg-indigo-200 shadow-lg">
+            <h3 class="text-center text-2xl text-blue-800 font-bold ">Statistical counts service</h3>
+            <div class="font-thin ">
+              <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua.Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magnaaliqua.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center ...">
+        <div class="w-full sm:w-1/2 md:w-1/2 flex flex-col p-3">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+            <div class="p-4 flex-1 flex flex-col text-center">
+              <h3 class="mb-2 text-2xl">Physicochemical characteristics service form</h3>
+              <div class="mb-4 text-grey-darker flex-1">
+                <form action="">
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Enter the sequences in fasta format
+                      <textarea id="fasta"
+                        class="shadow form-textarea mt-1 block w-full border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        rows="10" placeholder=""></textarea>
+                    </label>
+                  </div>
+                  <span>Or</span>
+                  <div class=" w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline">
+                    <label class="block text-gray-700 text- sm font-bold mb-2">
+                      <span class="mt-2 text-base leading-normal">Upload a .fasta file
+                      </span>
+                    </label>
+                    <div class="flex w-full justify-center bg-grey-lighter">
+                      <label
+                        class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer">
+                        <svg class="w-8 h-8" fill="rgba(165, 180, 252)" xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20">
+                          <path
+                            d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                        </svg>
+                        <span id="advise" hidden></span>
+                        <input type='file' id="file" class="hidden" />
+                      </label>
+                      <i id="remove_file" class="text-red-500 absolute fas fa-times-circle invisible"></i>
+                    </div>
+                  </div>
+                  <button
+                    class="bg-gray-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button" id="submit" disabled>Submit</button>
+                </form>
+                <span id="error" hidden>ERROR: Too many fasta sequences!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="loader" hidden>
+        <div class="spinner"></div>
+      </div>
+      <div class="flex justify-center ...">
+        <div class="w-full sm:w-full md:w-full flex flex-col p-3" id="results">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+            <div class="p-4 flex-1 flex flex-col text-center">
+              <h3 class="mb-2 text-2xl">Results</h3>
+              <div class="mb-4 text-grey-darker flex-1">
+                <div id="res_bar" class="w-1/2 float-left"></div>
+                <div id="group_bar" class="w-1/2 float-right"></div>
+                <table id="table-results">
+                  <thead>
+                    <th>Id sequence</th>
+                    <th>Sequence</th>
+                    <th>Residues</th>
+                    <th>Groups</th>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="modal" class="modal" hidden>
+        <div class="flex justify-center ...">
+          <div class="w-full sm:w-full md:w-full flex flex-col p-3">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+              <div class="p-4 flex-1 flex flex-col text-center">
+                <div class="mb-4 text-grey-darker flex-1">
+                  <div class="w-full" id="modal_bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+  <script type="text/javascript" charset="utf8" src="/js/statistical.js"></script>

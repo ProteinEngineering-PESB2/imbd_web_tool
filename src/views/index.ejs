@@ -1,0 +1,103 @@
+<%- include('partials/head'); -%>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script src="./js/index.js"></script>
+<link href="./css/index.css" rel="stylesheet">
+<body>
+  <%- include('partials/nav'); -%>
+  <div class = "slider">
+    <% sliderfiles.forEach(function(file) { %>
+      <img alt = "<%= file %>" src= "<%= file %>" class= "flex items-center"></img>
+    <% }); %>
+  </div>
+  <section class="m-2 font-sans leading-normal flex">
+    <div class="mx-auto-2 shadow-lg rounded overflow-hidden m-4 sm:flex">
+      <div class="h-48 sm:h-auto sm:w-48 md:w-64 flex-none 
+      bg-cover bg-center rounded rounded-t sm:rounded 
+      sm:rounded-l text-center overflow-hidden" 
+      style="background-image: url('./img/slider/1.png')">
+      </div>
+       <div class="px-6 py-4">
+        <h2 class="mb-2 font-black">Lorem ipsum</h2>
+        <p class="mb-4 text-grey-dark text-sm">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="m-2 font-sans leading-normal flex">
+    <div class="mx-auto-2 shadow-lg rounded overflow-hidden m-4 sm:flex">
+       <div class="px-6 py-4">
+        <h2 class="mb-2 font-black">Lorem ipsum</h2>
+        <p class="mb-4 text-grey-dark text-sm">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+        </p>
+      </div>
+      <div class="h-48 sm:h-auto sm:w-48 md:w-64 flex-none 
+      bg-cover bg-center rounded rounded-t sm:rounded 
+      sm:rounded-l text-center overflow-hidden" 
+      style="background-image: url('./img/slider/2.jpg')">
+      </div>
+    </div>
+  </section>
+  <section class="m-2 font-sans leading-normal flex">
+    <div class="mx-auto-2 shadow-lg rounded overflow-hidden m-4 sm:flex">
+      <div class="h-48 sm:h-auto sm:w-48 md:w-64 flex-none 
+      bg-cover bg-center rounded rounded-t sm:rounded 
+      sm:rounded-l text-center overflow-hidden" 
+      style="background-image: url('./img/slider/3.jpeg')">
+      </div>
+       <div class="px-6 py-4">
+        <h2 class="mb-2 font-black">Lorem ipsum</h2>
+        <p class="mb-4 text-grey-dark text-sm">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Expedita reiciendis repellat aliquam, maxime, enim velit 
+          illo consectetur in reprehenderit eligendi mollitia eum sint.
+          Rem fugit amet illo minus earum praesentium!
+        </p>
+      </div>
+    </div>
+  </section>
+</body>

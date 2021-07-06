@@ -1,0 +1,95 @@
+<%- include('partials/head'); -%>
+
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<body>
+  <%- include('partials/nav'); -%>
+  <div class="container flex flex-wrap w-full mx-auto px-2 mt-2">
+    <div class="w-full mb-6 ">
+        <div class="mx-2 h-full p-4 bg-indigo-200 shadow-lg">
+            <h3 class=" text-2xl text-blue-800 font-bold ">Tools</h3>
+            <div class="font-thin "><p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua.Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magnaaliqua.</p></div>
+        </div>
+    </div>
+  </div>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-1/3 md:w-1/4 flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+        <div class="p-4 flex-1 flex flex-col text-center">
+          <h3 class="mb-2 text-2xl">Alignment service</h3>
+          <div class="mb-4 text-grey-darker flex-1">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit illo nisi eos ipsum voluptas nam doloribus nulla minus ea iure hic facere corrupti dignissimos, vero asperiores aut at, tempora ullam?</p>
+          </div>
+          <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href="/alignment">Use this tool</a>
+        </div>
+      </div>
+    </div>
+    <div class="w-full sm:w-1/3 md:w-1/4 flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+        <div class="p-4 flex-1 flex flex-col text-center">
+          <h3 class="mb-2 text-2xl">Mapping service</h3>
+          <div class="mb-4 text-grey-darker flex-1">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit illo nisi eos ipsum voluptas nam doloribus nulla minus ea iure hic facere corrupti dignissimos, vero asperiores aut at, tempora ullam?</p>
+          </div>
+          <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href="/mapping">Use this tool</a>
+        </div>
+      </div>
+    </div>
+    <div class="w-full sm:w-1/3 md:w-1/4 flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+        <div class="p-4 flex-1 flex flex-col text-center">
+          <h3 class="mb-2 text-2xl">Physicochemical characteristics service</h3>
+          <div class="mb-4 text-grey-darker flex-1">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit illo nisi eos ipsum voluptas nam doloribus nulla minus ea iure hic facere corrupti dignissimos, vero asperiores aut at, tempora ullam?</p>
+          </div>
+          <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href="/physicochemical">Use this tool</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-1/3 md:w-1/4 flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+        <div class="p-4 flex-1 flex flex-col text-center">
+          <h3 class="mb-2 text-2xl">Predict values service</h3>
+          <div class="mb-4 text-grey-darker flex-1">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit illo nisi eos ipsum voluptas nam doloribus nulla minus ea iure hic facere corrupti dignissimos, vero asperiores aut at, tempora ullam?</p>
+          </div>
+          <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href="/predict_values">Use this tool</a>
+        </div>
+      </div>
+    </div>
+      <div class="w-full sm:w-1/4 md:w-1/4 flex flex-col p-3">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+          <div class="p-4 flex-1 flex flex-col text-center">
+            <h3 class="mb-2 text-2xl">Predict interaction data service</h3>
+            <div class="mb-4 text-grey-darker flex-1">
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit illo nisi eos ipsum voluptas nam doloribus nulla minus ea iure hic facere corrupti dignissimos, vero asperiores aut at, tempora ullam?</p>
+            </div>
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href="/predict_interaction">Use this tool</a>
+          </div>
+        </div>
+      </div>
+    <div class="w-full sm:w-1/4 md:w-1/4 flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+        <div class="p-4 flex-1 flex flex-col text-center">
+          <h3 class="mb-2 text-2xl">Statistical counts service</h3>
+          <div class="mb-4 text-grey-darker flex-1">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit illo nisi eos ipsum voluptas nam doloribus nulla minus ea iure hic facere corrupti dignissimos, vero asperiores aut at, tempora ullam?</p>
+          </div>
+          <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href="/statistical">Use this tool</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table id="example">
+    <thead>
+        <tr>
+            <th>id_sequence</th>
+            <th>Length</th>
+        </tr>
+    </thead>
+</table>
+</body>
+<script type="text/javascript" charset="utf8" src="/js/test_datatables.js"></script>

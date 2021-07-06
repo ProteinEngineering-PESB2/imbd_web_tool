@@ -1,0 +1,75 @@
+h2{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+#header{
+    max-width: 77ch;
+    margin: auto;
+    margin-bottom: 30px;
+}
+#sequence{
+    font-family: 'Courier New', monospace; 
+    word-wrap: break-word;
+}
+#groups{
+    float: left;
+    width: 45%;
+    margin-left: 5%;
+}
+#aminoacids{
+    float: right;
+    width: 45%;
+    margin-right: 5%;
+}
+h3{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.sequence_couple{
+    margin-top: 100px;
+    height: 200px;
+    float: left;
+    font-family: 'Courier New', monospace;
+}
+.pie_struct{
+    float: left;
+    width: 500px;
+    margin-left: 5%;
+}
+#table_go{
+    margin-top: 30px;
+    margin-bottom: 50px;
+    width: 50%;
+}
+#table_phy{
+    margin-top: 30px;
+    margin-bottom: 50px;
+    width: 50%;
+}
+#table_pfam{
+    margin-top: 30px;
+    margin-bottom: 50px;
+    width: 50%;
+
+}
+.mol-container {
+    width: 45%;
+    height: 480px;
+    position: relative;
+    margin-left: 3%;
+    float: left;
+    margin-bottom: 30px;
+}
+#chains{
+    width: 45%;
+    height: 480px;
+    overflow-y: scroll;
+    float: right;
+    margin-right: 3%;
+    font-family: 'Courier New', monospace;
+    word-wrap: break-word;
+}

@@ -1,0 +1,42 @@
+<div id="epitope_form">
+    <!-- Largo -->
+    <div class="mb-4" id="div_largo_epitope">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="grid-state">
+            Lenght
+        </label>
+        <div class="relative">
+            <small>Length range between: <br>
+                <b id="epitope_slider_val1">
+                    <!-- min -->
+                </b> and <b id="epitope_slider_val2">
+                    <!-- max -->
+                </b> residues
+            </small>
+            <br>
+            <input class="ex2" id="epitope_slider_input" type="text" class="span2" />
+        </div>
+    </div>
+    <!-- Type (Linear/Structural) -->
+    <div class="mb-4 div_type">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Type</label>
+        <select
+            id= "type_input" class="type_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <option></option>
+        </select>
+    </div>
+    <!-- Antigen -->
+    <div class="mb-4" id="div_epitope_antigeno">
+        <label class="block">
+            <input class="mr-2 leading-tight" type="checkbox" id= "checkbox_has_antigen">
+            <span class="text-sm">Has antigen reported</span>
+        </label>
+    </div>
+    <div class="mb-4" id="div_antigen" hidden>
+        <label class="block text-gray-700 text-sm font-bold mb-2">Antigen</label>
+        <select
+            id="antigen_input"
+            class="antigen_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <option></option>
+        </select>
+    </div>
+</div>
