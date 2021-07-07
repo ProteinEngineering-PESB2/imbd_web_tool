@@ -57,12 +57,11 @@
     <div id="structure_form">
         <div class="mb-4" id="div_estructura">
             <label class="block">
-                <input class="mr-2 leading-tight checkbox_structure" type="checkbox"
-                        id="checkbox_structure_antigen">
+                <input class="mr-2 leading-tight checkbox_structure" type="checkbox" id="checkbox_structure_antigen">
                 <span class="text-sm">Has PDB structure</span>
             </label>
         </div>
-        <div class="mb-4 div_pdb" hidden>
+        <div class="mb-4 div_pdb" id="div_pdb_antigen" hidden>
             <label class="block text-gray-700 text-sm font-bold mb-2">PDB ID</label>
             <select
                 class="pdb_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -70,8 +69,15 @@
                 <option></option>
             </select>
         </div>
-    </div>    
+    </div>
     <hr>
+    <!-- Has epitope -->
+    <div class="mb-4" id="div_epitope" hidden>
+        <label class="block">
+            <input class="mr-2 leading-tight" type="checkbox" id="checkbox_epitope">
+            <span class="text-sm">Has epitope reported</span>
+        </label>
+    </div>
     <!-- Interaction -->
     <div id="interaction_form">
         <div class="mb-4 div_interaction">
@@ -80,7 +86,7 @@
                 <span class="text-sm">Has interaction</span>
             </label>
         </div>
-        <div class="mb-4 div_relation_id" hidden>
+        <div class="mb-4 div_relation_id" id="div_relation_antigen" hidden>
             <label class="block text-gray-700 text-sm font-bold mb-2">Interaction</label>
             <select
                 class="interaction_input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

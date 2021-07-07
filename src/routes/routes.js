@@ -37,6 +37,7 @@ const {
     searchAntibody,
     searchEpitope,
     getLengthCollection,
+    getLengthCollectionQuery,
     getTerms
 } = require('../controllers/controller');
 var multipart = require('connect-multiparty')
@@ -70,7 +71,8 @@ router.post('/searchAntibody', searchAntibody);
 router.post('/searchAntigen', searchAntigen);
 router.post('/searchEpitope', searchEpitope);
 router.post('/getLengthCollection', getLengthCollection);
-router.get('/getTerms/:col?/:rol:?', getTerms);
+router.post('/getLengthCollectionQuery', getLengthCollectionQuery)
+router.get('/getTerms/:query?', getTerms);
 
 //Servicios
 router.get('/ServiceInteractions/:pdb?/:type?', ServiceInteractions);
