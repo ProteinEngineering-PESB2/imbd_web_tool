@@ -12,14 +12,35 @@ translate_groups = {
     "no_polares_alifaticos": "No Polar",
     "polares_sin_carga": "Polar Without Charge"
 }
+$("#table_phy").DataTable({
+    responsive: true,
+    paging: false,
+    ordering: false,
+    info: false,
+    searching: false
+})
+$("#table_go").DataTable({
+    responsive: true,
+    paging: false,
+    ordering: false,
+    info: false,
+    searching: false
+})
+$("#table_pfam").DataTable({
+    responsive: true,
+    paging: false,
+    ordering: false,
+    info: false,
+    searching: false
+})
 var id = $("h2").text()
 $.ajax({
-    url: window.location.origin + "/getAntibody/" + id, 
+    url: `/getAntibody/${id}`, 
     success: (data) => {
         let antibody_data = data[0];
         statisticValues_pie(antibody_data.statistic_value)
         structuralProperties_pie(antibody_data.structural_value);
-        structuralProperties_aligns(antibody_data.structural_value, antibody_data.Sequence, 75)
+        structuralProperties_aligns(antibody_data.structural_value, antibody_data.Sequence, 60)
     },
     complete: (data)=>{
         let antibody_data = data.responseJSON[0];
@@ -128,9 +149,9 @@ function view_alignment(properties, sequence, id, pred_software, len){
     let sequence_list = sequence_split(sequence, len)
     let properties_list = sequence_split(properties, len)
     sequence_list.forEach((element, index) => {
-        $(id).append("<p><span>Seq:</span>"+element+"</p>")
-        $(id).append("<p><span>"+pred_software+":</span>"+properties_list[index]+"</p>")
-        $(id).append("<br>")
+        $(id).append(`<p><span>Seq:</span>${element}</p>`)
+        $(id).append(`<p><span>${pred_software}:</span>${properties_list[index]}</p>`)
+        $(id).append(`<br>`)
     });
     if(sequence_list.length > 3){
         $(id).css("overflow-y", "scroll")
@@ -149,7 +170,7 @@ function viewStructure(pdb){
     var element = $('#molecule');
     var config = { backgroundColor: 'white' };//#83C576
     var viewer = $3Dmol.createViewer(element, config);
-    var pdbUri = '/Structures/' + pdb + '.pdb';
+    var pdbUri = `/Structures/${pdb}.pdb`;
     $.ajax(pdbUri, {
         success: function (data) {
             let v = viewer;
@@ -160,17 +181,17 @@ function viewStructure(pdb){
             v.zoom(1.1, 2000);
         },
         error: function (hdr, status, err) {
-            console.error("Failed to load PDB " + pdbUri + ": " + err);
+            console.error(`Failed to load PDB ${pdbUri}: ${err}`);
         }
     });
 }
 function viewSequences(pdb){
     $.ajax({
-        url: window.location.origin + "/getSequence/" + pdb,
+        url: `/getSequence/${pdb}`,
         success: (data) =>{
             for (let i = 0; i < data.length; i++) {
                 if(data[i].sequence.length > 0){
-                    $("#chains").append("<p>Chain "+data[i].chain+":<br>" + data[i].sequence+"</p><br>")
+                    $("#chains").append(`<p>Chain ${data[i].chain}:<br>${data[i].sequence}</p><br>`)
                 }
             }
         }

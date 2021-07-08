@@ -6,6 +6,8 @@
 <!-- Slider CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <link rel="stylesheet" href="/css/loader.css">
 <body>
   <%- include('partials/nav'); -%>
@@ -99,6 +101,7 @@
             <thead>
               <td>Id sequence</td>
               <td>Length</td>
+              <td>Type</td>
               <td>Details</td>
             </thead>
           </table>
@@ -107,6 +110,7 @@
       </div>
     </div>
   </div>
+  <div id="#profile" class="modal" hidden></div>
 </body>
 <script type="text/javascript" charset="utf8" src="/js/search/forms.js"></script>
 <script type="text/javascript" charset="utf8" src="/js/search/tables.js"></script>

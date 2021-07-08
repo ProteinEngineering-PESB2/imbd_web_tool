@@ -77,7 +77,7 @@ $("#submit").on("click", () => {
         let formData = new FormData();
         formData.append("file", $("#pdb_file")[0].files[0]);
         $.ajax({
-            url: window.location.origin + "/uploadFile",
+            url: "/uploadFile",
             method: "POST",
             data: formData,
             dataType: "html",
@@ -88,7 +88,7 @@ $("#submit").on("click", () => {
         $(".loader").show();
         $("#results").hide();
         $.ajax({
-            url: window.location.origin + "/ServiceInteractions/" + pdb + "/1",
+            url: `/ServiceInteractions/${pdb}/1`,
             method: "GET"
         }).done((res) => {
             pdb = pdb.split(".")[0]
@@ -100,7 +100,7 @@ $("#submit").on("click", () => {
         $(".loader").show();
         $("#results").hide();
         $.ajax({
-            url: window.location.origin + "/ServiceInteractions/" + pdb + "/2",
+            url: `/ServiceInteractions/${pdb}/2`,
             method: "GET"
         }).done((res) => {
             display_table_molecule(res, pdb);
@@ -112,13 +112,13 @@ $("#submit").on("click", () => {
 function display_table_molecule(res, pdb){
     data = parseResponse(res["response_service"]["detected_interactions"])
     display_results(data);
-    render_structure("../services/" + pdb + ".pdb", data)
+    render_structure(`../services/${pdb}.pdb`, data)
     $(".loader").hide();
     $("#results").show();
     $('#molecule').show();
     window.scrollTo(0, document.body.scrollHeight);
     $("#Download").on("click", () => {
-        download(JSON.stringify(res["response_service"]["detected_interactions"]), pdb + "_interactions.json", "text/plain");
+        download(JSON.stringify(res["response_service"]["detected_interactions"]), `${pdb}_interactions.json`, "text/plain");
     })
 }
 function download(content, fileName, contentType) {
@@ -177,8 +177,8 @@ function addLinesLabels(data, viewer) {
     data.forEach((x) => {
         if (x.visible) {
             console.log(x)
-            viewer.addLabel(x.member_1.chain + "-" + x.member_1.res + "-" + x.member_1.pos, { position: x.member_1.position })
-            viewer.addLabel(x.member_2.chain + "-" + x.member_2.res + "-" + x.member_2.pos, { position: x.member_2.position })
+            viewer.addLabel(`${x.member_1.chain}-${x.member_1.res}-${x.member_1.pos}`, { position: x.member_1.position })
+            viewer.addLabel(`${x.member_2.chain}-${x.member_2.res}-${x.member_2.pos}`, { position: x.member_2.position })
             viewer.addLabel(x.interaction.value, { position: x.interaction.position })
             viewer.addLine({ linewidth: 10, color: 'black', start: x.member_1.position, end: x.member_2.position })
         }

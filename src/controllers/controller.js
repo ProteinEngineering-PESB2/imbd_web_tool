@@ -12,7 +12,7 @@ var Terms = require("../models/Terms");
 
 //Ruteos a vistas
 indexCtrl.renderIndex = (req, res) => {
-    var sliderfiles = fs.readdirSync('./src/public/img/slider').map(file => "./img/slider/" + file)
+    var sliderfiles = fs.readdirSync('./src/public/img/slider').map(file => `./img/slider/${file}`)
     res.render('index', { sliderfiles: sliderfiles });
 };
 indexCtrl.renderAntibody = (req, res) => {
@@ -55,26 +55,36 @@ indexCtrl.renderStatistical = (req, res) => {
     res.render('statistical');
 };
 indexCtrl.renderProfile = (req, res) => {
-    let id = req.params.id;
-    let type = req.params.type;
+    let id = req.body.id;
+    let type = req.body.type;
     let col
+    console.log(type)
     if (type == "Antibody") { col = Antibody }
     if (type == "Antigen") { col = Antigen }
     if (type == "Antibody" || type == "Antigen") {
         col.findOne({ id_sequence: id }, {}).exec((err, data) => {
-            database = data.database_value
-            arr_data_sources = []
-            data_sources = Object.keys(database)
+            let database = data.database_value
+            let arr_data_sources = []
+            let data_sources = Object.keys(database)
             data_sources.forEach(function (x) {
                 if (database[x] == 1) {
                     arr_data_sources.push(x)
                 }
             })
-            res.render('profile-' + type.toLowerCase(), { data: data, data_sources: arr_data_sources });
+            res.render(`profile${type}`, { data: data, data_sources: arr_data_sources });
         })
     }
     if (type == "Epitope") {
-        res.render('profile-epitope', { id: id });
+        Epitope.findOne({ id_sequence: id }, {}).exec((err, data) => {
+            console.log(data)
+            let arr_data_sources = []
+            if(data.BciPep == "1"){arr_data_sources.push("BciPep")}
+            if(data.CBtope == "1"){arr_data_sources.push("CBtope")}
+            if(data.dbPepNeo == "1"){arr_data_sources.push("dbPepNeo")}
+            if(data.IEDB == "1"){arr_data_sources.push("IEDB")}
+            if(data.VDJ == "1"){arr_data_sources.push("VDJ")}
+            res.render('profileEpitope', { id: id, data: data, data_sources: arr_data_sources })
+        });
     }
 };
 //Apis
@@ -106,59 +116,6 @@ indexCtrl.getSequence = (req, res) => {
         return res.status(200).send(data)
     })
 };
-indexCtrl.getSearch = (req, res) => {
-    //Devuelve las entidades que cumplen con el query establecido en el search
-    let Colection
-    Colection = req.body["type"];
-    query = {}
-    query["Length"] = { "$gte": parseInt(req.body["min"]), "$lte": parseInt(req.body["max"]) }
-    if (Colection == "Antibody") {
-        if (req.body["pfam"] != "") { query["Pfam"] = req.body["pfam"] }
-        if (req.body["go_cc"] != "") { query["GO_Celular_Component"] = req.body["go_cc"] }
-        if (req.body["go_mf"] != "") { query["GO_Molecular_Function"] = req.body["go_mf"] }
-        if (req.body["go_bp"] != "") { query["GO_Biological_Process"] = req.body["go_bp"] }
-        if (req.body["chain"] == "Light") { query["Type"] == "Light"; }
-        if (req.body["chain"] == "Heavy") { query["Type"] == "Heavy"; }
-        if (req.body["has_pdb"] == "true") {
-            query["has_pdb"] = 1;
-            if (req.body["pdb_id"] != "") { query["pdb_id"] = req.body["pdb_id"]; }
-        }
-        if (req.body["has_interaction"] == "true") {
-            query["has_interaction"] = 1;
-            if (req.body["interaction_id"] != "") { query["antigen_relation"] = req.body["interaction_id"]; }
-        }
-        AntibodySearchView.find(query, { "_id": 0 }).limit(1000).exec((err, data) => {
-            return res.status(200).send(data)
-        })
-    }
-    if (Colection == "Antigen") {
-        if (req.body["pfam"] != "") { query["Pfam"] = req.body["pfam"] }
-        if (req.body["go_cc"] != "") { query["GO_Celular_Component"] = req.body["go_cc"] }
-        if (req.body["go_mf"] != "") { query["GO_Molecular_Function"] = req.body["go_mf"] }
-        if (req.body["go_bp"] != "") { query["GO_Biological_Process"] = req.body["go_bp"] }
-        if (req.body["has_pdb"] == "true") {
-            query["has_pdb"] = 1;
-            if (req.body["pdb_id"] != "") { query["pdb_id"] = req.body["pdb_id"]; }
-        }
-        if (req.body["has_interaction"] == "true") {
-            query["has_interaction"] = 1;
-            if (req.body["interaction_id"] != "") { query["antibody_relation"] = req.body["interaction_id"]; }
-        }
-        AntigenSearchView.find(query, { "_id": 0 }).limit(1000).exec((err, data) => {
-            return res.status(200).send(data)
-        })
-    }
-    if (Colection == "Epitope") {
-        if (req.body["has_antigen"] == "true") {
-            query["has_antigen"] = 1;
-            if (req.body["antigen_id"] != "") { query["antigens"] = req.body["antigen_id"]; }
-        }
-        if (req.body["type_molecule"] != "") { query["Type"] = req.body["type_molecule"] }
-        EpitopeSearchView.find(query, { "_id": 0 }).limit(1000).exec((err, data) => {
-            return res.status(200).send(data)
-        })
-    }
-};
 indexCtrl.getGO = (req, res) => {
     GO_Pfam.findOne({ "Colection": req.body['type'] }, {}).exec((err, data) => {
         return res.status(200).send(data)
@@ -167,7 +124,7 @@ indexCtrl.getGO = (req, res) => {
 indexCtrl.getFastaInfo = (req, res) => {
     let file = req.params.file
     let options = {
-        args: ["src/public/services/" + file]
+        args: [`src/public/services/${file}`]
     };
     PythonShell.run('src/scripts/getFastaInfo.py', options, function (err, results) {
         if (err) {
@@ -199,7 +156,7 @@ indexCtrl.ServiceInteractions = (req, res) => {
 indexCtrl.ServicePhysicochemical = (req, res) => {
     let file = req.params.file
     let options = {
-        args: ["src/public/services/" + file]
+        args: [`src/public/services/${file}`]
     }
     PythonShell.run('src/scripts/physicochemical_characteristics_service.py', options, function (err, results) {
         if (err) {
@@ -214,7 +171,7 @@ indexCtrl.ServicePhysicochemical = (req, res) => {
 indexCtrl.ServiceGeneOntology = (req, res) => {
     let file = req.params.file
     let options = {
-        args: ["src/public/services/" + file, "src/public/services/"]
+        args: [`src/public/services/${file}`, "src/public/services/"]
     }
     PythonShell.run('src/scripts/predict_go_values_service.py', options, function (err, results) {
         if (err) {
@@ -229,7 +186,7 @@ indexCtrl.ServiceGeneOntology = (req, res) => {
 indexCtrl.ServicePFam = (req, res) => {
     let file = req.params.file
     let options = {
-        args: ["src/public/services/" + file, "src/public/services/"]
+        args: [`src/public/services/${file}`, "src/public/services/"]
     }
     PythonShell.run('src/scripts/predict_pfam_properties_service.py', options, function (err, results) {
         if (err) {
@@ -244,7 +201,7 @@ indexCtrl.ServicePFam = (req, res) => {
 indexCtrl.ServiceStructural = (req, res) => {
     let file = req.params.file
     let options = {
-        args: ["src/public/services/" + file, "src/public/services/"]
+        args: [`src/public/services/${file}`, "src/public/services/"]
     }
     PythonShell.run('src/scripts/predict_structural_properties_service.py', options, function (err, results) {
         if (err) {
@@ -259,7 +216,7 @@ indexCtrl.ServiceStructural = (req, res) => {
 indexCtrl.ServiceStatistical = (req, res) => {
     let file = req.params.file
     let options = {
-        args: ["src/public/services/" + file]
+        args: [`src/public/services/${file}`]
     }
     PythonShell.run('src/scripts/statistical_counts_service.py', options, function (err, results) {
         if (err) {
@@ -280,7 +237,7 @@ indexCtrl.ServiceMappingFilters = (req, res) => {
     if (req.body["go_bp"] != "") { query["GO_Biological_Process"] = req.body["go_bp"] }
     AntigenSearchView.find(query, { "_id": 0, "id_sequence": 1, "Sequence": 1 }).limit(1000).exec((err, data) => {
         let number = Math.ceil(Math.random() * 100000)
-        let route = 'src/public/services/' + number + '.json'
+        let route = `src/public/services/${number}.json`
         let text = JSON.stringify(data)
         fs.writeFileSync(route, text, 'utf8')
         let options = {
@@ -299,7 +256,7 @@ indexCtrl.ServiceMappingFilters = (req, res) => {
 indexCtrl.ServiceMappingFasta = (req, res) => {
     let file = req.body["file"]
     let sequence = req.body["map_sequence"]
-    let route = 'src/public/services/' + file
+    let route = `src/public/services/${file}`
     let options = {
         args: [sequence, route, "fasta"],
     }
@@ -329,7 +286,7 @@ indexCtrl.ServiceAlignment = (req, res) => {
     }
     col.find(query, { "_id": 0, "id_sequence": 1, "Sequence": 1 }).limit(1000).exec((err, data) => {
         let number = Math.ceil(Math.random() * 100000)
-        let route = 'src/public/services/' + number + '.json'
+        let route = `src/public/services/${number}.json`
         let text = JSON.stringify(data)
         fs.writeFileSync(route, text, 'utf8')
         let options = {
@@ -363,7 +320,6 @@ indexCtrl.uploadFile = (req, res) => {
         })
     }
 }
-
 indexCtrl.getLengthCollection = (req, res) => {
     let col = req.body.col;
     if (col == "Epitope") {
@@ -384,7 +340,7 @@ indexCtrl.getLengthCollection = (req, res) => {
 }
 indexCtrl.getLengthCollectionQuery = (req, res) => {
     let col = req.body.col;
-    let params = req.query
+    let params = req.body
     query = {}
     if (col == "Epitope") {
         query["Length"] = { "$gte": parseInt(params["min"]), "$lte": parseInt(params["max"]) }
@@ -393,7 +349,6 @@ indexCtrl.getLengthCollectionQuery = (req, res) => {
             if (params["antigen_id"] != "") { query["antigens"] = params["antigen_id"]; }
         }
         if (params["type_molecule"] != "") { query["Type"] = params["type_molecule"] }
-        console.log(query)
         EpitopeSearchView.countDocuments(query, (err, count) => {
             return res.status(200).send({ "count": count })
         })
@@ -417,6 +372,7 @@ indexCtrl.getLengthCollectionQuery = (req, res) => {
         })
     }
     if (col == "Antibody") {
+        console.log(params)
         query["Length"] = { "$gte": parseInt(params["min"]), "$lte": parseInt(params["max"]) }
         if (params["pfam"] != "") { query["Pfam"] = params["pfam"] }
         if (params["go_cc"] != "") { query["GO_Celular_Component"] = params["go_cc"] }
@@ -437,8 +393,6 @@ indexCtrl.getLengthCollectionQuery = (req, res) => {
         })
     }
 }
-
-
 indexCtrl.getTerms = (req, res) => {
     let params = req.query
     let col = params["col"]
@@ -462,6 +416,7 @@ indexCtrl.searchEpitope = (req, res) => {
         if (params["antigen_id"] != "") { query["antigens"] = params["antigen_id"]; }
     }
     if (params["type_molecule"] != "") { query["Type"] = params["type_molecule"] }
+    /* query["id_sequence"] = {$regex: params.search} */
     EpitopeSearchView.find(query, {}).skip(skip).limit(page_length).exec((err, data) => {
         return res.status(200).send({
             data: data,
@@ -469,10 +424,10 @@ indexCtrl.searchEpitope = (req, res) => {
     })
 };
 indexCtrl.searchAntigen = (req, res) => {
-    var params = req.body
-    query = {}
-    var page_length = parseInt(params.length)
-    var skip = parseInt(params.start)
+    let params = req.body
+    let query = {}
+    let page_length = parseInt(params.length)
+    let skip = parseInt(params.start)
     query["Length"] = { "$gte": parseInt(params["min"]), "$lte": parseInt(params["max"]) }
     if (params["pfam"] != "") { query["Pfam"] = params["pfam"] }
     if (params["go_cc"] != "") { query["GO_Celular_Component"] = params["go_cc"] }
@@ -486,6 +441,7 @@ indexCtrl.searchAntigen = (req, res) => {
         query["has_interaction"] = 1;
         if (params["interaction_id"] != "") { query["antibody_relation"] = params["interaction_id"]; }
     }
+    /* query["id_sequence"] = {$regex: params.search} */
     AntigenSearchView.find(query, {}).skip(skip).limit(page_length).exec((err, data) => {
         return res.status(200).send({
             data: data,
@@ -513,6 +469,7 @@ indexCtrl.searchAntibody = (req, res) => {
         query["has_interaction"] = 1;
         if (params["interaction_id"] != "") { query["antigen_relation"] = params["interaction_id"]; }
     }
+    /* query["id_sequence"] = {$regex: params.search} */
     AntibodySearchView.find(query, {}).skip(skip).limit(page_length).exec((err, data) => {
         return res.status(200).send({
             data: data,

@@ -1,9 +1,7 @@
-<%- include('partials/head'); -%>
 <link href="/css/profile-antibody.css" rel="stylesheet">
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <body>
-    <%- include('partials/nav'); -%>
     <div id = "ficha">
         <h2><%-data.id_sequence-%></h2>
         <div id = "header">
@@ -132,11 +130,10 @@
         </div>
         <hr>
         <div id = "viewer" hidden>
-          <h3><%=data.pdb_id%></h3>
-          <div id="molecule" class="mol-container"></div>
-          <div id="chains"></div>
+            <h3><%=data.pdb_id%></h3>
+            <div id="molecule" class="mol-container"></div>
+            <div id="chains"></div>
         </div>
     </div>
 </body>
-<script type="text/javascript" charset="utf8" src="/js/profile-antibody.js"></script>
-<script type="text/javascript" charset="utf8" src="/js/datatable.js"></script>
+<script type="text/javascript" charset="utf8" src="/js/profileAntigen.js"></script>

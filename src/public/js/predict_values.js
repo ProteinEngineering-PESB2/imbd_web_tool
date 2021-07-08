@@ -17,7 +17,7 @@ var table_results = $("#table-results").DataTable({
             render: function ( data ) {
                 let array = data.match(/.{1,80}/g)
                 let chain = array.join("\n");
-                return `<span class="sequence">`+ chain +`</span>`
+                return `<span class="sequence">${chain}</span>`
             }
         },
         {"className": "dt-center", "targets": [0,2,3,4]},
@@ -110,7 +110,7 @@ $("#submit").on("click", function(){
         formData.append("file", file)
     }
     $.ajax({
-        url: window.location.origin + "/uploadFile",
+        url: "/uploadFile",
         method: "POST",
         data: formData,
         dataType: "html",
@@ -148,7 +148,7 @@ $("#submit").on("click", function(){
 function go_ajax(name, go){
     if(go){
         return $.ajax({
-            url: window.location.origin + "/ServiceGeneOntology/" + name,
+            url: `/ServiceGeneOntology/${name}`,
             method: "GET"
         })
     }
@@ -156,7 +156,7 @@ function go_ajax(name, go){
 function pfam_ajax(name, pfam){
     if(pfam){
         return $.ajax({
-            url: window.location.origin + "/ServicePFam/" + name,
+            url: `/ServicePFam/${name}`,
             method: "GET"
         })
     }
@@ -164,14 +164,14 @@ function pfam_ajax(name, pfam){
 function secondary_ajax(name, secondary){
     if(secondary){
         return $.ajax({
-            url: window.location.origin + "/ServiceStructural/" + name,
+            url: `/ServiceStructural/${name}`,
             method: "GET"
         })
     }
 }
 function fillData(name, go_data, pfam_data, secondary_data){
     $.ajax({
-        url: window.location.origin + "/getFastaInfo/" + name,
+        url: `/getFastaInfo/${name}`,
         method: "GET"
     }).done(function(res){
         let matrix = []
@@ -287,7 +287,6 @@ function parseSecond(data, sequence){
     $(".modal").css("padding", "0px")
 };
 function create_pie(data, id, title){
-
     // Build the chart
     Highcharts.chart(id, {
         chart: {
@@ -338,8 +337,8 @@ function view_alignment(properties, sequence, id, pred_software, len){
     let sequence_list = sequence_split(sequence, len)
     let properties_list = sequence_split(properties, len)
     sequence_list.forEach((element, index) => {
-        $(id).append("<p><span>Seq:</span>"+element+"</p>")
-        $(id).append("<p><span>"+pred_software+":</span>"+properties_list[index]+"</p>")
+        $(id).append(`<p><span>Seq:</span>${element}</p>`)
+        $(id).append(`<p><span>${pred_software}:</span>${properties_list[index]}</p>`)
         $(id).append("<br>")
     });
     if(sequence_list.length > 3){

@@ -15,7 +15,7 @@ var table_results = $("#table-results").DataTable({
             render: function ( data ) {
                 let array = data.match(/.{1,80}/g)
                 let chain = array.join("\n");
-                return `<span class="sequence">`+ chain +`</span>`
+                return `<span class="sequence">${chain}</span>`
             }
         },
         {"className": "dt-center", "targets": [0,2,3]},
@@ -87,7 +87,7 @@ $("#submit").on("click", function(){
         formData.append("file", file)
     }
     $.ajax({
-        url: window.location.origin + "/uploadFile",
+        url: "/uploadFile",
         method: "POST",
         data: formData,
         dataType: "html",
@@ -95,7 +95,7 @@ $("#submit").on("click", function(){
         processData: false
     })
     $.ajax({
-        url: window.location.origin + "/ServiceStatistical/" + name,
+        url: `/ServiceStatistical/${name}`,
         method: "GET"
     }).done((data)=>{
         fillData(data, name)
@@ -104,7 +104,7 @@ $("#submit").on("click", function(){
 
 function fillData(data, name){
     $.ajax({
-        url: window.location.origin + "/getFastaInfo/" + name,
+        url: `/getFastaInfo/${name}`,
         method: "GET"
     }).done(function(res){
         let matrix = []
@@ -173,7 +173,7 @@ function parseColumns(data, type){
         },
         tooltip: {
 			formatter: function() {
-				return '' + this.series.name + ': ' + this.y.toPrecision(3) + '%';
+				return `${this.series.name}: ${this.y.toPrecision(3)%}`;
         		}
       	},
         xAxis: [{
@@ -210,7 +210,7 @@ function Error_Graph(data, id, type){
             enabled: false
         },
         title: {
-          text: type + ' Summary'
+          text: `${type} Summary`
         },
         xAxis: [{
           categories: data.array_keys

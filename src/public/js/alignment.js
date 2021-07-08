@@ -18,7 +18,7 @@ var table_results = $("#table-results").DataTable({
             targets: 0,
             render: function ( data ) {
                 if(data.length >= 50){
-                    let new_data = data.substr(0, 50) + "...";
+                    let new_data = `${data.substr(0, 50)}...`;
                     return new_data 
                 }
                 return data
@@ -79,7 +79,7 @@ $("#ex2").on("change", function (slideEvt) {
 function fillSelects() {
     let type = $("#typeOfDatabase option:selected").text()
     $.ajax({
-        url: window.location.origin + "/getGO/",
+        url: "/getGO/",
         method: 'POST',
         data: {
             "type": type
@@ -132,7 +132,7 @@ $("#submit").on("click", function(){
     query["go_mf"] = mf_select.select2("data")[0].text;
     query["go_bp"] = bp_select.select2("data")[0].text;
     $.ajax({
-        url: window.location.origin + "/ServiceAlignment",
+        url: "/ServiceAlignment",
         method: "POST",
         data: query
     }).done(function (data) {
@@ -154,10 +154,10 @@ function fillData(data,) {
         let align_results = value.response_search
         row = []
         row.push(id_sequence)
-        let align = `<span class="align" style='font-family: Courier New, monospace'>`+align_results.input_sequence+'<br>   '+align_results.space_format+'<br>'+align_results.compare_sequence+'</span>'
+        let align = `<span class="align" style='font-family: Courier New, monospace'>${align_results.input_sequence}<br> ${align_results.space_format}<br>${align_results.compare_sequence}</span>`
         row.push(align)
         row.push(align_results.distance_sequences)
-        row.push(`<button class='view_profile bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='button' id='view_`+index+`'><i class='fas fa-eye'></i></button>`)
+        row.push(`<button class='view_profile bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='button' id='view_${index}'><i class='fas fa-eye'></i></button>`)
         matrix.push(row)
     });
     table_results.clear();

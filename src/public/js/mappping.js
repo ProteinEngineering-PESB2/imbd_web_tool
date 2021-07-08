@@ -13,7 +13,7 @@ var table_results = $("#table-results").DataTable({
         {
             targets: 1,
             render: function (data) {
-                return `<span class="sequence">` + data + `</span>`
+                return `<span class="sequence">${data}</span>`
             }
         },
         { "className": "dt-center", "targets": [0, 2] },
@@ -123,7 +123,7 @@ $("#ex2").on("change", function (slideEvt) {
 
 function fillSelects() {
     $.ajax({
-        url: window.location.origin + "/getGO/",
+        url: "/getGO/",
         method: 'POST',
         data: {
             "type": "Antigen"
@@ -185,7 +185,7 @@ $("#submit").on("click", function () {
         query["go_bp"] = bp_select.select2("data")[0].text;
         console.log(query)
         $.ajax({
-            url: window.location.origin + "/ServiceMappingFilters",
+            url: "/ServiceMappingFilters",
             method: "POST",
             data: query
         }).done(function (data) {
@@ -209,7 +209,7 @@ $("#submit").on("click", function () {
             formData.append("file", file)
         }
         $.ajax({
-            url: window.location.origin + "/uploadFile",
+            url: "/uploadFile",
             method: "POST",
             data: formData,
             dataType: "html",
@@ -217,7 +217,7 @@ $("#submit").on("click", function () {
             processData: false
         })
         $.ajax({
-            url: window.location.origin + "/ServiceMappingFasta/" + name,
+            url: `/ServiceMappingFasta/${name}`,
             method: "POST",
             data: { "file": name, "map_sequence": map_sequence }
         }).done((data) => {
@@ -260,7 +260,7 @@ function fillData(data, map_sequence) {
                 let part_1 = chain.substring(0, inicio)
                 let part_2 = chain.substring(inicio, final)
                 let part_3 = chain.substring(final)
-                chain = part_1 + `<span class="bg-green-500">` + part_2 + `</span>` + part_3
+                chain = part_1 + `<span class="bg-green-500">${part_2}</span>${part_3}`
             })
             row.push(chain)
             row.push(`<i class="text-green-500 fas fa-check"></i>`)

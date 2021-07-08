@@ -68,7 +68,7 @@ $("#submit").on("click", function () {
         formData.append("file", file)
     }
     $.ajax({
-        url: window.location.origin + "/uploadFile",
+        url: "/uploadFile",
         method: "POST",
         data: formData,
         dataType: "html",
@@ -76,7 +76,7 @@ $("#submit").on("click", function () {
         processData: false
     })
     $.ajax({
-        url: window.location.origin + "/ServicePhysicochemical/" + name,
+        url: `/ServicePhysicochemical/${name}`,
         method: "GET"
     }).done((res) => {
         parseResponse(res)

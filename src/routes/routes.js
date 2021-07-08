@@ -14,7 +14,6 @@ const {
     getAntibody,
     getEpitope,
     getAntigen,
-    getSearch,
     getGO,
     renderAlignment,
     renderMapping,
@@ -51,7 +50,7 @@ router.get('/search', renderSearch);
 router.get('/tools', renderTools);
 router.get('/about', renderAbout);
 router.get('/structure/:structure?', renderStructure);
-router.get('/profile/:type?/:id?', renderProfile);
+router.post('/profile', renderProfile);
 router.get('/alignment', renderAlignment);
 router.get('/mapping', renderMapping);
 router.get('/physicochemical', renderPhysicochemical);
@@ -63,7 +62,6 @@ router.get('/getAntibody/:id?', getAntibody);
 router.get('/getAntigen/:id?', getAntigen);
 router.get('/getEpitope/:id?', getEpitope);
 router.get('/getSequence/:structure?', getSequence);
-router.post('/getSearch', getSearch);
 router.post('/getGO', getGO);
 router.post('/uploadFile', uploadFolder, uploadFile);
 router.get('/getFastaInfo/:file?', getFastaInfo);

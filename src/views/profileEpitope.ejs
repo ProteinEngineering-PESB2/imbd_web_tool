@@ -1,0 +1,21 @@
+<link href="/css/profile-antibody.css" rel="stylesheet">
+
+<div id="ficha">
+    <h2>
+        <%-data.id_sequence-%>
+    </h2>
+    <div id="header">
+        <p id="sequence">
+            <%-data.Sequence-%>
+        </p>
+        <p>Length: <%-data.Length-%> aa</p>
+        <p>Data Sources:</p>
+        <ul>
+            <% for(let i=0; i < data_sources.length; i++){ %>
+                <li>
+                    <%=data_sources[i]%>
+                </li>
+                <% } %>
+        </ul>
+    </div>
+</div>
