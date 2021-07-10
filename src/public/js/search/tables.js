@@ -152,6 +152,7 @@ var table_epitope = $('#results-table-epitope').DataTable({
   autoWidth: false,
   serverSide: true,
   searching: false,
+  processing: true,
 /*   processing: true,
  */  ajax: {
     url: `${window.location.origin}/SearchEpitope`,
@@ -189,6 +190,7 @@ var table_antibody = $('#results-table-antibody').DataTable({
   autoWidth: false,
   serverSide: true,
   searching: false,
+  processing: true,
 /*   processing: true,
  */  ajax: {
     url: `${window.location.origin}/SearchAntibody`,
@@ -250,6 +252,7 @@ var table_antigen = $('#results-table-antigen').DataTable({
   autoWidth: false,
   serverSide: true,
   searching: false,
+  processing: true,
   //processing: true,
   ajax: {
     url: `${window.location.origin}/SearchAntigen`,
@@ -322,20 +325,8 @@ dbs = ["Antibody", "Antigen", "Epitope"]
 dbs.forEach(function (d) {
   $(`#results-table-${d.toLowerCase()} tbody`).on('click', 'button', function () {
     let id = $(this).parents('tr').children().html()
-    $.ajax({
-      url: `/profile`,
-      method: "POST",
-      data: { id: id, type: d }
-    }).done((data) => {
-      $(".modal").empty()
-      $(".modal").append(data)
-      $(".modal").modal({
-        fadeDuration: 200,
-        showClose: false
-      });
-      $(".modal").css("max-width", "100%")
-      $(".modal").css("width", "100%")
-      $(".modal").css("padding", "0px")
-    })
+    localStorage.setItem("id", id)
+    localStorage.setItem("type", d)
+    window.open('profileBase', "_blank")
   });
 })

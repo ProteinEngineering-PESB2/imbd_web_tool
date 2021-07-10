@@ -201,3 +201,117 @@ function viewSequences(pdb){
         }
     })
 }
+
+var table_results = $('#table-results').DataTable({
+    paging: false,
+    searching: false,
+    bInfo: false,
+    ordering: false,
+});
+
+function parseResponse(res) {
+    data = []
+    res.forEach((row) => {
+        row_cords = {
+            "member_1": { "position": { "x": parseFloat(row.x_pos_1), "y": parseFloat(row.y_pos_1), "z": parseFloat(row.z_pos_1) }, "chain": row["chain-1"], "pos": parseInt(row["pos-1"]), "res": row["resdiue-1"] },
+            "member_2": { "position": { "x": parseFloat(row.x_pos_2), "y": parseFloat(row.y_pos_2), "z": parseFloat(row.z_pos_2) }, "chain": row["chain-2"], "pos": parseInt(row["pos-2"]), "res": row["resdiue-2"] },
+            "interaction": { "position": { "x": (parseFloat(row.x_pos_1) + parseFloat(row.x_pos_2)) / 2, "y": (parseFloat(row.y_pos_1) + parseFloat(row.y_pos_2)) / 2, "z": (parseFloat(row.z_pos_1) + parseFloat(row.z_pos_2)) / 2 }, "value": parseFloat(row.value_energy).toPrecision(3) }
+        }
+        data.push(row_cords)
+    })
+    return data
+}
+$.ajax({
+    url: "/getRelations",
+    method: "POST",
+    data: { id: id, db: "Antigen" }
+}).done(function (data) {
+    data = data.data
+    data.forEach(function (value, index) {
+        $("#interactions").append(`
+        <h3 class="title_interaction flex-1 flex flex-col w-full text-center">${value.id_antibody} - ${value.id_antigen}<br>(${value.pdb_file}.pdb)</h3>
+        <div class="w-1/2 float-left">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+                <div class="p-4 flex-1 flex flex-col text-center">
+                    <div class="mb-4 text-grey-darker flex-1">
+                    <table id="table_${index}">
+                        <thead>
+                            <th>Chain 1</th>
+                            <th>Pos 1</th>
+                            <th>Res 1</th>
+                            <th>Chain 2</th>
+                            <th>Pos 2</th>
+                            <th>Res 2</th>
+                            <th>Value</th>                            
+                            <th>View</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="molecule-${index}" class="mol-container w-1/2 float-right"></div>`)
+        response = parseResponse(value.interactions_predicted)
+        table = $(`#table_${index}`).DataTable({
+            paging: false,
+            searching: false,
+            bInfo: false,
+            ordering: false,
+            scrollY: "400px",
+            "columnDefs": [
+                {"className": "dt-center", "targets": "_all"}
+            ]
+        })
+        display_results(response, table)
+        element = $(`#molecule-${index}`)
+        render_structure(`../Structures/${value.pdb_file.toLowerCase()}.pdb`, response, element)
+    })
+})
+
+function display_results(data, element) {
+    let matriz = [];
+    data.forEach((row) => {
+        let arr = [];
+        arr.push(row.member_1.chain);
+        arr.push(row.member_1.pos);
+        arr.push(row.member_1.res);
+        arr.push(row.member_2.chain);
+        arr.push(row.member_2.pos);
+        arr.push(row.member_2.res);
+        arr.push(row.interaction.value);
+        arr.push(`<button class='details w-3/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 rounded focus:outline-none focus:shadow-outline' type = 'button'>
+        <i class='fas fa-eye'></i></button>`)
+        matriz.push(arr);
+    });
+    element.clear()
+    element.rows.add(matriz).draw()
+    element.columns.adjust().draw()
+}
+function render_structure(pdbUri, res, element) {
+    var config = { backgroundColor: 'white' };//#83C576
+    var viewer = $3Dmol.createViewer(element, config);
+    $.ajax(pdbUri, {
+        success: function (molecule) {
+            let v = viewer;
+            v.addModel(molecule, "pdb");
+            v.setStyle({}, { cartoon: { colorscheme: 'chain' } });
+            addLinesLabels(res, v);
+            v.zoomTo();
+            v.render();
+            v.zoom(1.2, 2000);
+        },
+        error: function (hdr, status, err) {
+            console.error("Failed to load PDB " + pdbUri + ": " + err);
+        }
+    });
+}
+function addLinesLabels(data, viewer) {
+    data.forEach((x) => {
+            console.log(x)
+            viewer.addLabel(`${x.member_1.chain}-${x.member_1.res}-${x.member_1.pos}`, { position: x.member_1.position })
+            viewer.addLabel(`${x.member_2.chain}-${x.member_2.res}-${x.member_2.pos}`, { position: x.member_2.position })
+            viewer.addLabel(x.interaction.value, { position: x.interaction.position })
+            viewer.addLine({ linewidth: 10, color: 'black', start: x.member_1.position, end: x.member_2.position })
+    })
+}

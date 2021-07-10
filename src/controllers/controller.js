@@ -8,6 +8,8 @@ var GO_Pfam = require("../models/go_pfam");
 var AntibodySearchView = require("../models/AntibodySearchView");
 var AntigenSearchView = require("../models/AntigenSearchView");
 var EpitopeSearchView = require("../models/EpitopeSearchView");
+var AntibodyAntigenRelations = require("../models/antibody_antigen_relations");
+
 var Terms = require("../models/Terms");
 
 //Ruteos a vistas
@@ -32,6 +34,9 @@ indexCtrl.renderTools = (req, res) => {
 };
 indexCtrl.renderAbout = (req, res) => {
     res.render('about');
+};
+indexCtrl.renderProfileBase = (req, res) => {
+    res.render('profileBase');
 };
 indexCtrl.renderStructure = (req, res) => {
     res.render('structure', { structure: req.params.structure });
@@ -367,6 +372,9 @@ indexCtrl.getLengthCollectionQuery = (req, res) => {
             query["has_interaction"] = 1;
             if (params["interaction_id"] != "") { query["antibody_relation"] = params["interaction_id"]; }
         }
+        if(params["has_epitope"] == 'true'){
+            query["has_epitopes"] = 1;
+        }
         AntigenSearchView.countDocuments(query, (err, count) => {
             return res.status(200).send({ "count": count })
         })
@@ -407,6 +415,9 @@ indexCtrl.getTerms = (req, res) => {
 }
 indexCtrl.searchEpitope = (req, res) => {
     var params = req.body
+    console.log(params)
+    let orderColumn = params['order[0][column]'];
+    let orderDir = params['order[0][dir]'];
     query = {}
     var page_length = parseInt(params.length)
     var skip = parseInt(params.start)
@@ -416,15 +427,35 @@ indexCtrl.searchEpitope = (req, res) => {
         if (params["antigen_id"] != "") { query["antigens"] = params["antigen_id"]; }
     }
     if (params["type_molecule"] != "") { query["Type"] = params["type_molecule"] }
-    /* query["id_sequence"] = {$regex: params.search} */
-    EpitopeSearchView.find(query, {}).skip(skip).limit(page_length).exec((err, data) => {
-        return res.status(200).send({
-            data: data,
+    if(orderColumn == '0'){
+        EpitopeSearchView.find(query, {}).skip(skip).limit(page_length).exec((err, data) => {
+            return res.status(200).send({
+                data: data,
+            })
         })
-    })
+    }
+    if(orderColumn == '1'){
+        if(orderDir == "asc"){
+            EpitopeSearchView.find(query, {}).sort({"Length": 1}).skip(skip).limit(page_length).exec((err, data) => {
+                return res.status(200).send({
+                    data: data,
+                })
+            })
+        }
+        if(orderDir == "desc"){
+            EpitopeSearchView.find(query, {}).sort({"Length": -1}).skip(skip).limit(page_length).exec((err, data) => {
+                return res.status(200).send({
+                    data: data,
+                })
+            })
+        }
+    }
 };
 indexCtrl.searchAntigen = (req, res) => {
     let params = req.body
+    console.log(params)
+    let orderColumn = params['order[0][column]'];
+    let orderDir = params['order[0][dir]'];
     let query = {}
     let page_length = parseInt(params.length)
     let skip = parseInt(params.start)
@@ -441,16 +472,37 @@ indexCtrl.searchAntigen = (req, res) => {
         query["has_interaction"] = 1;
         if (params["interaction_id"] != "") { query["antibody_relation"] = params["interaction_id"]; }
     }
-    /* query["id_sequence"] = {$regex: params.search} */
-    AntigenSearchView.find(query, {}).skip(skip).limit(page_length).exec((err, data) => {
-        return res.status(200).send({
-            data: data,
+    if(params["has_epitope"] == 'true'){
+        query["has_epitopes"] = 1;
+    }
+    if(orderColumn == '0'){
+        AntigenSearchView.find(query, {}).skip(skip).limit(page_length).exec((err, data) => {
+            return res.status(200).send({
+                data: data,
+            })
         })
-    })
+    }
+    if(orderColumn == '1'){
+        if(orderDir == "asc"){
+            AntigenSearchView.find(query, {}).sort({"Length": 1}).skip(skip).limit(page_length).exec((err, data) => {
+                return res.status(200).send({
+                    data: data,
+                })
+            })
+        }
+        if(orderDir == "desc"){
+            AntigenSearchView.find(query, {}).sort({"Length": -1}).skip(skip).limit(page_length).exec((err, data) => {
+                return res.status(200).send({
+                    data: data,
+                })
+            })
+        }
+    }
 };
 indexCtrl.searchAntibody = (req, res) => {
     var params = req.body
-    console.log(params)
+    let orderColumn = params['order[0][column]'];
+    let orderDir = params['order[0][dir]'];
     query = {}
     var page_length = parseInt(params.length)
     var skip = parseInt(params.start)
@@ -469,11 +521,49 @@ indexCtrl.searchAntibody = (req, res) => {
         query["has_interaction"] = 1;
         if (params["interaction_id"] != "") { query["antigen_relation"] = params["interaction_id"]; }
     }
-    /* query["id_sequence"] = {$regex: params.search} */
-    AntibodySearchView.find(query, {}).skip(skip).limit(page_length).exec((err, data) => {
-        return res.status(200).send({
-            data: data,
+    if(orderColumn == '0'){
+        AntibodySearchView.find(query, {}).skip(skip).limit(page_length).exec((err, data) => {
+            return res.status(200).send({
+                data: data,
+            })
         })
-    })
+    }
+    if(orderColumn == '1'){
+        if(orderDir == "asc"){
+            AntibodySearchView.find(query, {}).sort({"Length": 1}).skip(skip).limit(page_length).exec((err, data) => {
+                return res.status(200).send({
+                    data: data,
+                })
+            })
+        }
+        if(orderDir == "desc"){
+            AntibodySearchView.find(query, {}).sort({"Length": -1}).skip(skip).limit(page_length).exec((err, data) => {
+                return res.status(200).send({
+                    data: data,
+                })
+            })
+        }
+    }
 };
+indexCtrl.getRelations = (req,res)=>{
+    params = req.body
+    console.log(params)
+    if(params.db == "Antibody"){
+        AntibodyAntigenRelations.find({id_antibody: params.id},{}).exec((err, data)=>{
+            console.log(data)
+            return res.status(200).send({
+                data: data
+            })
+        })
+    }
+    else{
+        AntibodyAntigenRelations.find({id_antigen: params.id},{}).exec((err, data)=>{
+            return res.status(200).send({
+                data: data
+            })
+        })
+    }
+    AntibodyAntigenRelations
+/*     AntibodyAntigenRelations
+ */}
 module.exports = indexCtrl;

@@ -37,7 +37,9 @@ const {
     searchEpitope,
     getLengthCollection,
     getLengthCollectionQuery,
-    getTerms
+    getTerms,
+    getRelations,
+    renderProfileBase
 } = require('../controllers/controller');
 var multipart = require('connect-multiparty')
 var uploadFolder = multipart({uploadDir: 'src/public/services'})
@@ -57,6 +59,7 @@ router.get('/physicochemical', renderPhysicochemical);
 router.get('/predict_values', renderPredict_values);
 router.get('/predict_interaction', renderPredict_interaction);
 router.get('/statistical', renderStatistical);
+router.get('/profileBase', renderProfileBase)
 //Apis
 router.get('/getAntibody/:id?', getAntibody);
 router.get('/getAntigen/:id?', getAntigen);
@@ -71,7 +74,7 @@ router.post('/searchEpitope', searchEpitope);
 router.post('/getLengthCollection', getLengthCollection);
 router.post('/getLengthCollectionQuery', getLengthCollectionQuery)
 router.get('/getTerms/:query?', getTerms);
-
+router.post('/getRelations', getRelations)
 //Servicios
 router.get('/ServiceInteractions/:pdb?/:type?', ServiceInteractions);
 router.get('/ServicePhysicochemical/:file?', ServicePhysicochemical);
