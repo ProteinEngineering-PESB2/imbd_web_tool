@@ -1,0 +1,28 @@
+<div id="fasta_input" hidden>
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Enter the sequences in fasta format
+            <textarea id="fasta_db"
+                class="shadow form-textarea mt-1 block w-full border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                rows="10" placeholder=""></textarea>
+        </label>
+    </div>
+    <span>Or</span>
+    <div class=" w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline">
+        <label class="block text-gray-700 text- sm font-bold mb-2">
+            <span class="mt-2 text-base leading-normal">Upload a .fasta file
+            </span>
+        </label>
+        <div class="flex w-full justify-center bg-grey-lighter">
+            <label
+                class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer">
+                <svg class="w-8 h-8" fill="rgba(165, 180, 252)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path
+                        d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                </svg>
+                <span id="advise" hidden></span>
+                <input type='file' id="file" class="hidden" />
+            </label>
+            <i id="remove_file" class="text-red-500 absolute fas fa-times-circle invisible"></i>
+        </div>
+    </div>
+</div>

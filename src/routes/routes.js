@@ -63,7 +63,7 @@ router.get('/profileBase', renderProfileBase)
 //Apis
 router.get('/getAntibody/:id?', getAntibody);
 router.get('/getAntigen/:id?', getAntigen);
-router.get('/getEpitope/:id?', getEpitope);
+router.post('/getEpitope', getEpitope);
 router.get('/getSequence/:structure?', getSequence);
 router.post('/getGO', getGO);
 router.post('/uploadFile', uploadFolder, uploadFile);

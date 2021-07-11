@@ -9,6 +9,7 @@ var AntibodySearchView = require("../models/AntibodySearchView");
 var AntigenSearchView = require("../models/AntigenSearchView");
 var EpitopeSearchView = require("../models/EpitopeSearchView");
 var AntibodyAntigenRelations = require("../models/antibody_antigen_relations");
+var AntigenEpitopeRelations = require("../models/AntigenEpitopeRelations");
 
 var Terms = require("../models/Terms");
 
@@ -106,8 +107,8 @@ indexCtrl.getAntibody = (req, res) => {
     })
 };
 indexCtrl.getEpitope = (req, res) => {
-    let id = req.params.id;
-    Epitope.find({ id_sequence: id }, {}).exec((err, data) => {
+    let id = req.body.id;
+    Epitope.findOne({ id_sequence: id }, {lineal: 1, Sequence: 1}).exec((err, data) => {
         return res.status(200).send(data)
     })
 };
@@ -289,19 +290,20 @@ indexCtrl.ServiceAlignment = (req, res) => {
     if (database == "Antibody") {
         col = AntibodySearchView
     }
-    col.find(query, { "_id": 0, "id_sequence": 1, "Sequence": 1 }).limit(1000).exec((err, data) => {
-        let number = Math.ceil(Math.random() * 100000)
-        let route = `src/public/services/${number}.json`
-        let text = JSON.stringify(data)
-        fs.writeFileSync(route, text, 'utf8')
+    col.find(query, { "_id": 0, "id_sequence": 1, "Sequence": 1 }).exec((err, data) => {
+        let routeDB = `src/public/services/${Math.ceil(Math.random() * 100000)}.json`
+        let routeStr = `src/public/services/${Math.ceil(Math.random() * 100000)}.fasta`
+        fs.writeFileSync(routeDB, JSON.stringify(data), 'utf8')
+        fs.writeFileSync(routeStr, req.body["map_sequence"], 'utf8')
         let options = {
-            args: [req.body["map_sequence"], route],
+            args: [routeStr, routeDB],
         }
         PythonShell.run('src/scripts/alignment_service_example.py', options, function (err, results) {
+            fs.unlinkSync(routeDB)
+            fs.unlinkSync(routeStr)
             if (err) { return res.status(200).send(err) }
             else {
                 let response = JSON.parse(results)
-                fs.unlinkSync(route)
                 return res.status(200).send(response)
             }
         })
@@ -386,8 +388,8 @@ indexCtrl.getLengthCollectionQuery = (req, res) => {
         if (params["go_cc"] != "") { query["GO_Celular_Component"] = params["go_cc"] }
         if (params["go_mf"] != "") { query["GO_Molecular_Function"] = params["go_mf"] }
         if (params["go_bp"] != "") { query["GO_Biological_Process"] = params["go_bp"] }
-        if (params["chain"] == "Light") { query["Type"] == "Light"; }
-        if (params["chain"] == "Heavy") { query["Type"] == "Heavy"; }
+        if (params["chain"] == "Light") { query["Type"] = "Light"; }
+        if (params["chain"] == "Heavy") { query["Type"] = "Heavy"; }
         if (params["has_pdb"] == "true") {
             query["has_pdb"] = 1;
             if (params["pdb_id"] != "") { query["pdb_id"] = params["pdb_id"]; }
@@ -396,6 +398,7 @@ indexCtrl.getLengthCollectionQuery = (req, res) => {
             query["has_interaction"] = 1;
             if (params["interaction_id"] != "") { query["antigen_relation"] = params["interaction_id"]; }
         }
+        console.log(query)
         AntibodySearchView.countDocuments(query, (err, count) => {
             return res.status(200).send({ "count": count })
         })
@@ -556,14 +559,19 @@ indexCtrl.getRelations = (req,res)=>{
             })
         })
     }
-    else{
+    if(params.db == "Antigen"){
         AntibodyAntigenRelations.find({id_antigen: params.id},{}).exec((err, data)=>{
             return res.status(200).send({
                 data: data
             })
         })
     }
-    AntibodyAntigenRelations
-/*     AntibodyAntigenRelations
- */}
+    if(params.db =="Antigen_Epitope"){
+        AntigenEpitopeRelations.find({antigen: params.id},{}).exec((err, data)=>{
+            return res.status(200).send({
+                data: data
+            })
+        })
+    }
+}
 module.exports = indexCtrl;

@@ -89,83 +89,14 @@ $("form").on("change", function () {
         }
     }
 })
-var slider = $("#ex2").slider({
-    range: true,
-    step: 1,
-    value: [0, 10]
-});
-//Estilos del slider. 
-$(".loader").hide()
-$(".tooltip-inner").css("display", "none");
-$(".slider-selection").css("background", "#0378B3");
-$(".slider-track-low").css("background", "grey");
-$(".slider-track-high").css("background", "grey");
-$(".slider").css("width", "90%");
-//Creación de los select, vacíos de momento.
-var pfam_select = $("#pfam_input").select2();
-var cc_select = $("#cc_input").select2();
-var mf_select = $("#mf_input").select2();
-var bp_select = $("#bp_input").select2();
-
-function updateLengths(min, max) {
-    slider.slider("setAttribute", "min", min);
-    slider.slider("setAttribute", "max", max);
-    slider.slider("setAttribute", "value", [min, max]);
-    slider.slider("refresh");
-    $(".slider").css("width", "90%");
-    $("#ex2SliderVal1").text(min)
-    $("#ex2SliderVal2").text(max)
-}
-$("#ex2").on("change", function (slideEvt) {
-    $("#ex2SliderVal1").text(slideEvt.value.newValue[0]);
-    $("#ex2SliderVal2").text(slideEvt.value.newValue[1]);
-});
-
-function fillSelects() {
-    $.ajax({
-        url: "/getGO/",
-        method: 'POST',
-        data: {
-            "type": "Antigen"
-        }
-    }).done(function (data) {
-        //Se llama a la función que rellena el slider
-        min = data.minLength
-        max = data.maxLength
-        updateLengths(min, max)
-        //Obtener los arrays
-        pfam = data.Pfam
-        cellular_component = data.Cellular_component
-        molecular_function = data.Molecular_function
-        biological_process = data.Biological_process
-        //Genera unos placeholders de mentira
-        pfam.unshift("")
-        cellular_component.unshift("")
-        molecular_function.unshift("")
-        biological_process.unshift("")
-        pfam_select.empty().select2({
-            data: pfam
-        });
-        cc_select.empty().select2({
-            data: cellular_component
-        });
-        mf_select.empty().select2({
-            data: molecular_function
-        });
-        bp_select.empty().select2({
-            data: biological_process
-        });
-    })
-}
-fillSelects("Antigen")
 $("#typeOfDatabase").on("change", function () {
-    $("#filters").hide()
+    $("#antigen_form").hide()
     $("#fasta_input").hide()
     selected = $("#typeOfDatabase option:selected").text()
-    if (selected == "Antigen database") {
-        $("#filters").show()
+    if (selected == "Antigen") {
+        $("#antigen_form").show()
     }
-    else {
+    if(selected == "Fasta"){
         $("#fasta_input").show()
     }
 })

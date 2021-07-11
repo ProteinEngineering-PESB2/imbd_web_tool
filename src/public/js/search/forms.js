@@ -1,5 +1,5 @@
-
 /* Se rellenan los sliders. */
+var select = $("#typeOfDatabase option")
 dbs = ["Antibody", "Antigen", "Epitope"]
 dbs.forEach(function (value) {
   $(`#${value.toLowerCase()}_slider_input`).slider({
@@ -30,7 +30,8 @@ dbs.forEach(function (value) {
     $(".slider-selection").css("background", "#0378B3");
     $(".slider-track-low").css("background", "grey");
     $(".slider-track-high").css("background", "grey");
-    $(".slider").css("width", "90%");  })
+    $(".slider").css("width", "90%");  
+  })
 })
 dbs=["Antibody", "Antigen"]
 dbs.forEach(function(value){

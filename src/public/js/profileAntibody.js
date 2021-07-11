@@ -33,7 +33,7 @@ $("#table_pfam").DataTable({
     info: false,
     searching: false
 })
-var id = $("h2").text().split(' ').join('').replace(/\n/g, '')
+var id = $("#sequence_id").text().split(' ').join('').replace(/\n/g, '')
 $.ajax({
     url: `/getAntibody/${id}`,
     success: (data) => {
@@ -104,8 +104,6 @@ function create_pie(data, id, title) {
         chart: {
             plotBackgroundColor: null,
             plotShadow: false,
-            width: 500,
-            height: 350,
             type: 'pie',
         },
         title: {
@@ -222,9 +220,12 @@ $.ajax({
     data: { id: id, db: "Antibody" }
 }).done(function (data) {
     data = data.data
-    data.forEach(function (value, index) {
-        $("#interactions").append(`
-        <h3 class="title_interaction flex-1 flex flex-col w-full text-center">${value.id_antibody} - ${value.id_antigen}<br>(${value.pdb_file}.pdb)</h3>
+    console.log(data.length)
+    if (data.length > 0) {
+        $("#interactions").show()
+        data.forEach(function (value, index) {
+            $("#interactions").append(`
+        <h3 class="title_interaction flex-1 flex flex-col w-full text-center">${value.id_antibody} - ${value.id_antigen}<i class="ref_antigen fas fa-external-link-square-alt cursor-pointer" id="${value.id_antigen}"></i><br>(${value.pdb_file}.pdb)</h3>
         <div class="w-1/2 float-left">
             <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
                 <div class="p-4 flex-1 flex flex-col text-center">
@@ -247,22 +248,29 @@ $.ajax({
             </div>
         </div>
         <div id="molecule-${index}" class="mol-container w-1/2 float-right"></div>`)
-        response = parseResponse(value.interactions_predicted)
-        table = $(`#table_${index}`).DataTable({
-            paging: false,
-            searching: false,
-            bInfo: false,
-            ordering: false,
-            scrollY: "400px",
-            "columnDefs": [
-                {"className": "dt-center", "targets": "_all"}
-            ]
+            response = parseResponse(value.interactions_predicted)
+            table = $(`#table_${index}`).DataTable({
+                paging: false,
+                searching: false,
+                bInfo: false,
+                ordering: false,
+                scrollY: "400px",
+                "columnDefs": [
+                    { "className": "dt-center", "targets": "_all" }
+                ]
+            })
+            display_results(response, table)
+            let pdb_id = value.pdb_file
+            element = $(`#molecule-${index}`)
+            render_structure(`../Structures/${value.pdb_file.toLowerCase()}.pdb`, response, element)
         })
-        display_results(response, table)
-        let pdb_id = value.pdb_file
-        element = $(`#molecule-${index}`)
-        render_structure(`../Structures/${value.pdb_file.toLowerCase()}.pdb`, response, element)
-    })
+        $(".ref_antigen").click(function () {
+            let id_antigen = $(this).prop("id")
+            localStorage.setItem("id", id_antigen)
+            localStorage.setItem("type", "Antigen")
+            window.open('profileBase', "_blank")
+        })
+    }
 })
 
 function display_results(data, element) {
@@ -304,10 +312,10 @@ function render_structure(pdbUri, res, element) {
 }
 function addLinesLabels(data, viewer) {
     data.forEach((x) => {
-            console.log(x)
-            viewer.addLabel(`${x.member_1.chain}-${x.member_1.res}-${x.member_1.pos}`, { position: x.member_1.position })
-            viewer.addLabel(`${x.member_2.chain}-${x.member_2.res}-${x.member_2.pos}`, { position: x.member_2.position })
-            viewer.addLabel(x.interaction.value, { position: x.interaction.position })
-            viewer.addLine({ linewidth: 10, color: 'black', start: x.member_1.position, end: x.member_2.position })
+        console.log(x)
+        viewer.addLabel(`${x.member_1.chain}-${x.member_1.res}-${x.member_1.pos}`, { position: x.member_1.position })
+        viewer.addLabel(`${x.member_2.chain}-${x.member_2.res}-${x.member_2.pos}`, { position: x.member_2.position })
+        viewer.addLabel(x.interaction.value, { position: x.interaction.position })
+        viewer.addLine({ linewidth: 10, color: 'black', start: x.member_1.position, end: x.member_2.position })
     })
 }

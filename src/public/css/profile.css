@@ -1,14 +1,4 @@
-h2{
-    margin-top: 30px;
-    margin-bottom: 30px;
-    text-align: center;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
-}
-#header{
-    max-width: 77ch;
-    margin: auto;
-    margin-bottom: 30px;
-}
+
 #sequence{
     font-family: 'Courier New', monospace; 
     word-wrap: break-word;
@@ -22,12 +12,6 @@ h2{
     float: right;
     width: 45%;
     margin-right: 5%;
-}
-h3{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .sequence_couple{
     margin-top: 100px;

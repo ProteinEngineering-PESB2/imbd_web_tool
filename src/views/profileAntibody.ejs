@@ -1,179 +1,213 @@
-<link href="/css/profile-antibody.css" rel="stylesheet">
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-
-<body>
-  <div id="ficha">
-    <h2><%-data.id_sequence-%></h2>
-    <div id="header">
-      <p id="sequence">
-        <%-data.Sequence-%>
-      </p>
-      <p>Length: <%-data.Length-%> aa</p>
-      <p>Data Sources:</p>
-      <ul>
-        <% for(let i=0; i < data_sources.length; i++){ %>
-          <% if(data_sources[i] !="$init" ){ %>
-            <li>
-              <%=data_sources[i]%>
-            </li>
-            <% } %>
-              <% } %>
-      </ul>
-    </div>
-    <hr>
-    <div id="plots">
-      <h3>Sequence statistics</h3>
-      <div id="groups"></div>
-      <div id="aminoacids"></div>
-      <div style="clear:both;"></div>
-    </div>
-    <hr>
-    <div id="properties_phy">
-      <h3>Physico Chemical Properties</h3>
-      <table class="table" id="table_phy">
-        <thead>
-          <tr>
-            <th>Property</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Molecular Height</td>
-            <td>
-              <%-data.phy_properties.MolecularWeight-%>
-            </td>
-          </tr>
-          <tr>
-            <td>Isoelectric point</td>
-            <td>
-              <%-data.phy_properties.Isoelectric_point-%>
-            </td>
-          </tr>
-          <tr>
-            <td>Charge Density</td>
-            <td>
-              <%-data.phy_properties.Charge_density-%>
-            </td>
-          </tr>
-          <tr>
-            <td>Charge</td>
-            <td>
-              <%-data.phy_properties.Charge_density-%>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <hr>
-    <div id="properties_struct">
-      <h3>Structural Properties</h3>
-      <div id="ss3_plot" class="pie_struct"></div>
-      <div id="ss3_sequence" class="sequence_couple">
+<div id="ficha">
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-full md:w-full flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+        <div class="p-4 flex-1 flex flex-col text-center">
+          <h3 class="mb-2 text-xl" id="sequence_id">
+            <%-data.id_sequence-%>
+          </h3>
+        </div>
+        <div class="mb-4 text-grey-darker flex-1">
+          <p id="sequence">
+            <%-data.Sequence-%>
+          </p>
+          <p>Length: <%-data.Length-%> aa</p>
+          <p>Data Sources:</p>
+          <ul>
+            <% for(let i=0; i < data_sources.length; i++){ %>
+              <% if(data_sources[i] !="$init" ){ %>
+                <li>
+                  <%=data_sources[i]%>
+                </li>
+                <% } %>
+                  <% } %>
+          </ul>
+        </div>
       </div>
-      <div style="clear:both;"></div>
-      <div id="diso_plot" class="pie_struct"></div>
-      <div id="diso_sequence" class="sequence_couple">
-      </div>
-      <div style="clear:both;"></div>
-      <div id="ss8_plot" class="pie_struct"></div>
-      <div id="ss8_sequence" class="sequence_couple">
-      </div>
-      <div style="clear:both;"></div>
-      <div id="sac_plot" class="pie_struct"></div>
-      <div id="sac_sequence" class="sequence_couple">
-      </div>
-      <div style="clear:both;"></div>
-    </div>
-    <hr>
-    <div id="pfam_go">
-      <h3>Gene Ontology predictions</h3>
-      <table class="table" id="table_go">
-        <thead>
-          <tr>
-            <th>Property</th>
-            <th>Id</th>
-            <th>Predicted Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Molecular Function</td>
-            <td>
-              <%-data.go_predictions.Molecular_Function_GO-%>
-            </td>
-            <td>
-              <%-data.go_predictions.Predict_value_MFO-%>
-            </td>
-          </tr>
-          <tr>
-            <td>Biological Process</td>
-            <td>
-              <%-data.go_predictions.Biological_Process_GO-%>
-            </td>
-            <td>
-              <%-data.go_predictions.Predict_value_BPO-%>
-            </td>
-          </tr>
-          <tr>
-            <td>Celular Component</td>
-            <td>
-              <%-data.go_predictions.Celular_Component_GO-%>
-            </td>
-            <td>
-              <%-data.go_predictions.Predict_value_CCO-%>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <h3>PFAM predictions</h3>
-      <table class="table" id="table_pfam">
-        <thead>
-          <tr>
-            <th>Accession</th>
-            <th>Id_accession</th>
-            <th>Type</th>
-            <th>Class</th>
-            <th>E-value</th>
-            <th>Bitscore</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i=0; i < data.pfam_prediction.length; i++ ) { %>
-            <tr>
-              <td>
-                <%=data.pfam_prediction[i].Accession%>
-              </td>
-              <td>
-                <%=data.pfam_prediction[i].Id_accession%>
-              </td>
-              <td>
-                <%=data.pfam_prediction[i].Type%>
-              </td>
-              <td>
-                <%=data.pfam_prediction[i].Class%>
-              </td>
-              <td>
-                <%=data.pfam_prediction[i].Evalue%>
-              </td>
-              <td>
-                <%=data.pfam_prediction[i].Bitscore%>
-              </td>
-            </tr>
-            <%} %>
-        </tbody>
-      </table>
-    </div>
-    <hr>
-    <div id="viewer" hidden>
-      <h3><%=data.pdb_id%></h3>
-      <div id="molecule" class="mol-container"></div>
-      <div id="chains"></div>
-    </div>
-    <hr>
-    <div id="interactions">
     </div>
   </div>
-</body>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-full md:w-full flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden ">
+        <div class="p-4 flex-1 flex flex-col text-center" id="plots">
+          <h3 class="mb-2 text-xl">
+            Sequence statistics
+          </h3>
+        </div>
+        <div class="w-1/2 float-left" id="groups"></div>
+        <div class="w-1/2 float-right" id="aminoacids"></div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-full md:w-full flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+        <div class="p-4 flex-1 flex flex-col text-center" id="properties_phy">
+          <h3 class="mb-2 text-xl">Physico Chemical Properties</h3>
+          <table class="table" id="table_phy">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Molecular Height</td>
+                <td>
+                  <%-data.phy_properties.MolecularWeight-%>
+                </td>
+              </tr>
+              <tr>
+                <td>Isoelectric point</td>
+                <td>
+                  <%-data.phy_properties.Isoelectric_point-%>
+                </td>
+              </tr>
+              <tr>
+                <td>Charge Density</td>
+                <td>
+                  <%-data.phy_properties.Charge_density-%>
+                </td>
+              </tr>
+              <tr>
+                <td>Charge</td>
+                <td>
+                  <%-data.phy_properties.Charge_density-%>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-full md:w-full flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden ">
+        <div class="p-4 flex-1 flex flex-col text-center" id="properties_struct">
+          <h3 class="mb-2 text-xl">Structural Properties</h3>
+        </div>
+        <div id="ss3">
+          <div id="ss3_plot" class="pie_struct w-1/2 float-left"></div>
+          <div id="ss3_sequence" class="sequence_couple w-1/2 float-right"></div>
+          <div class="clear-both"></div>
+        </div>
+        <div id="diso">
+          <div id="diso_plot" class="pie_struct w-1/2 float-left"></div>
+          <div id="diso_sequence" class="sequence_couple w-1/2 float-right"></div>
+          <div class="clear-both"></div>
+        </div>
+        <div id="ss8">
+          <div id="ss8_plot" class="pie_struct w-1/2 float-left"></div>
+          <div id="ss8_sequence" class="sequence_couple w-1/2 float-right"></div>
+          <div class="clear-both"></div>
+        </div>
+        <div id="sac">
+          <div id="sac_plot" class="pie_struct w-1/2 float-left"></div>
+          <div id="sac_sequence" class="sequence_couple w-1/2 float-right"></div>
+          <div class="clear-both"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-full md:w-full flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden" id="pfam_go">
+        <h3 class="mb-2 text-xl text-center">Gene Ontology predictions</h3>
+        <table class="table" id="table_go">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Id</th>
+              <th>Predicted Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Molecular Function</td>
+              <td>
+                <%-data.go_predictions.Molecular_Function_GO-%>
+              </td>
+              <td>
+                <%-data.go_predictions.Predict_value_MFO-%>
+              </td>
+            </tr>
+            <tr>
+              <td>Biological Process</td>
+              <td>
+                <%-data.go_predictions.Biological_Process_GO-%>
+              </td>
+              <td>
+                <%-data.go_predictions.Predict_value_BPO-%>
+              </td>
+            </tr>
+            <tr>
+              <td>Celular Component</td>
+              <td>
+                <%-data.go_predictions.Celular_Component_GO-%>
+              </td>
+              <td>
+                <%-data.go_predictions.Predict_value_CCO-%>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <h3 class="mb-2 text-xl text-center">PFAM predictions</h3>
+        <table class="table" id="table_pfam">
+          <thead>
+            <tr>
+              <th>Accession</th>
+              <th>Id_accession</th>
+              <th>Type</th>
+              <th>Class</th>
+              <th>E-value</th>
+              <th>Bitscore</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let i=0; i < data.pfam_prediction.length; i++ ) { %>
+              <tr>
+                <td>
+                  <%=data.pfam_prediction[i].Accession%>
+                </td>
+                <td>
+                  <%=data.pfam_prediction[i].Id_accession%>
+                </td>
+                <td>
+                  <%=data.pfam_prediction[i].Type%>
+                </td>
+                <td>
+                  <%=data.pfam_prediction[i].Class%>
+                </td>
+                <td>
+                  <%=data.pfam_prediction[i].Evalue%>
+                </td>
+                <td>
+                  <%=data.pfam_prediction[i].Bitscore%>
+                </td>
+              </tr>
+              <%} %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-full md:w-full flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden" id="viewer" hidden>
+        <h3 class="mb-2 text-xl text-center"><%=data.pdb_id%></h3>
+        <div id="molecule" class="mol-container"></div>
+        <div id="chains"></div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center ...">
+    <div class="w-full sm:w-full md:w-full flex flex-col p-3">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden" id="interactions" hidden>
+        <h3 class="mb-2 text-xl text-center">Interactions</h3>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript" charset="utf8" src="/js/profileAntibody.js"></script>

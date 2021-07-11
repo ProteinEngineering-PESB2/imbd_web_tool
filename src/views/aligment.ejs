@@ -1,14 +1,11 @@
 <%- include('partials/head'); -%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<!-- Slider CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-  integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" />
 <link rel="stylesheet" href="/css/loader.css">
 <body>
   <%- include('partials/nav'); -%>
@@ -55,60 +52,15 @@
                   </div>
                 </div>
               </div>
-              <div id="filters">
-                <div class="mb-4" id="div_largo">
-                  <label class="block text-gray-700 text-sm font-bold mb-2" for="grid-state">
-                    Lenght
-                  </label>
-                  <div class="relative">
-                    <label for="ex2">Filter by sequence lenght interval:</label><br>
-                    <small id="ex2CurrentSliderValLabel">The selected sequence length range is between: <br>
-                      <b id="ex2SliderVal1">
-                        <!-- min -->
-                      </b> and <b id="ex2SliderVal2">
-                        <!-- max -->
-                      </b> residues
-                    </small>
-                    <br>
-                    <input id="ex2" type="text" class="span2" />
-                  </div>
-                </div>
-                <div class="mb-4" id="div_pfam">
-                  <label class="block text-gray-700 text-sm font-bold mb-2">Pfam Domain</label>
-                  <select
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="pfam_input">
-                    <option></option>
-                  </select>
-                </div>
-                <div class="mb-4" id="div_bgo">
-                  <label class="block text-gray-700 text-sm font-bold mb-2">Biological Process</label>
-                  <select
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="bp_input">
-                    <option></option>
-                  </select>
-                </div>
-                <div class="mb-4" id="div_mgo">
-                  <label class="block text-gray-700 text-sm font-bold mb-2">Molecular Function</label>
-                  <select
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="mf_input">
-                    <option></option>
-                  </select>
-                </div>
-                <div class="mb-4" id="div_cgo">
-                  <label class="block text-gray-700 text-sm font-bold mb-2">Celular Component</label>
-                  <select
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="cc_input">
-                    <option></option>
-                  </select>
-                </div>
+              <div id="Form">
+                <%-include('forms/antibody');-%>
+                <%-include('forms/antigen');-%>
               </div>
+              <div id="count"></div>
               <button
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button" id="submit">Submit</button>
+              <div id="warning"></div>
             </form>
           </div>
         </div>
@@ -138,3 +90,4 @@
   </div>
 </body>
 <script type="text/javascript" charset="utf8" src="/js/alignment.js"></script>
+<script type="text/javascript" charset="utf8" src="/js/search/forms.js"></script>

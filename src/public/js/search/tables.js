@@ -1,3 +1,17 @@
+function desactivateSubmit(newvalue) {
+  $("#submit").prop("disabled", newvalue);
+  if (newvalue) {
+      $("#submit").removeClass("bg-blue-500")
+      $("#submit").removeClass("hover:bg-blue-700")
+      $("#submit").addClass("bg-gray-400")
+  }
+  else {
+      $("#submit").removeClass("bg-gray-400")
+      $("#submit").addClass("bg-blue-500")
+      $("#submit").addClass("hover:bg-blue-700")
+  }
+}
+desactivateSubmit(true)
 $("#antigen_form").hide()
 $("#antibody_form").hide()
 $("#epitope_form").hide()
@@ -11,6 +25,7 @@ $("#typeOfDatabase").on("change", function () {
   $("#results").hide()
   if (parseInt($("#typeOfDatabase option:selected").val()) == 0) {
     $("#Form").hide()
+    desactivateSubmit(true)
   }
   else {
     $.ajax({
@@ -48,6 +63,7 @@ $("#typeOfDatabase").on("change", function () {
         $("#antibody_form").hide()
         $("#epitope_form").show()
       }
+      desactivateSubmit(false)
     })
   }
 });
@@ -88,7 +104,7 @@ $("form").on("change", function () {
     query["type_molecule"] = $("#type_input").select2("data")[0].text
   }
   $.ajax({
-    url: `${window.location.origin}/getLengthCollectionQuery`,
+    url: `/getLengthCollectionQuery`,
     method: "POST",
     data: query
   }).done(function (data) {
@@ -98,7 +114,7 @@ $("form").on("change", function () {
 
 function getLengthTotal() {
   return $.ajax({
-    url: `${window.location.origin}/getLengthCollection`,
+    url: `/getLengthCollection`,
     method: "POST",
     data: {
       col: $("#typeOfDatabase option:selected").text()
@@ -142,7 +158,7 @@ function getLengthQuery() {
     query["type_molecule"] = $("#type_input").select2("data")[0].text
   }
   return $.ajax({
-    url: `${window.location.origin}/getLengthCollectionQuery`,
+    url: `/getLengthCollectionQuery`,
     method: "POST",
     data: query
   })
@@ -162,9 +178,7 @@ var table_epitope = $('#results-table-epitope').DataTable({
       query["max"] = $("#epitope_slider_val2").text();
       query["has_antigen"] = $("#checkbox_has_antigen").is(":checked");
       query["antigen_id"] = $("#antigen_input").select2("data")[0].text;
-      query["type_molecule"] = $("#type_input").select2("data")[0].text;
-/*       query["columns"] = [{"orderable": false}, {"orderable": false}];
- */    },
+      query["type_molecule"] = $("#type_input").select2("data")[0].text;},
     dataSrc: function (response) {
       response.recordsTotal = lengthTotal
       response.recordsFiltered = lengthQuery
@@ -255,7 +269,7 @@ var table_antigen = $('#results-table-antigen').DataTable({
   processing: true,
   //processing: true,
   ajax: {
-    url: `${window.location.origin}/SearchAntigen`,
+    url: `/SearchAntigen`,
     method: 'POST',
     data: function (query) {
       query["min"] = $("#antigen_slider_val1").text();
